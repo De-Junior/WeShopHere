@@ -4,150 +4,307 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WeBuyHere Dev</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background:#f4f6f8; color:#1f2937; }
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
 
-    header { background:#1f2937; color:#fff; }
-    .top-bar { display:flex; gap:16px; padding:14px 24px; flex-wrap:wrap; align-items:center; }
-    .logo a { font-size:28px; font-weight:700; color:#38bdf8; text-decoration:none; }
-    .address { background:#111827; padding:8px 14px; border-radius:8px; font-size:14px; }
-    .search { flex:1; }
-    .search input { width:100%; padding:10px 14px; border-radius:8px; border:none; }
+    body {
+      background: #f4f6f8;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* Header */
+    header {
+      background: #1f2937;
+      color: #fff;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 14px 24px;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 28px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .address {
+      background: #111827;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .search {
+      flex: 1;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+    }
 
     .account a {
-      color:#fff;
-      font-size:14px;
-      text-decoration:none;
-      cursor:pointer;
+      color: #fff;
+      font-size: 14px;
+      margin-right: 4px;
     }
 
-    .alert { background:#fb7185; color:#fff; text-align:center; padding:10px; font-size:14px; }
+    /* Alert */
+    .alert {
+      background: #fb7185;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
 
+    /* Navigation */
     nav {
-      background:#fff;
-      padding:14px 24px;
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      border-bottom:1px solid #e5e7eb;
+      background: #fff;
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .nav-left, .nav-right { display:flex; gap:20px; align-items:center; }
+    .nav-left, .nav-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
 
     .nav-link {
-      text-decoration:none;
-      color:#1f2937;
-      font-weight:500;
-      cursor:pointer;
+      color: #1f2937;
+      font-weight: 500;
     }
 
     .nav-link:hover {
-      text-decoration:underline;
+      text-decoration: underline;
     }
 
-    .badge { background:#dcfce7; color:#15803d; padding:6px 12px; border-radius:999px; font-size:13px; }
+    .badge {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
 
-    .products { max-width:1200px; margin:40px auto; padding:0 24px; }
-    .products h2 { font-size:24px; margin-bottom:24px; }
+    /* Products Section */
+    .products {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
 
+    .products h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    /* Department Filter */
+    .department-filter {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .department-filter button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      background: #e5e7eb;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .department-filter button:hover,
+    .department-filter button.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    /* Product Grid */
     .product-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-      gap:20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
     }
 
     .product-card {
-      background:#fff;
-      border-radius:14px;
-      padding:14px;
-      box-shadow:0 8px 20px rgba(0,0,0,.05);
-      display:flex;
-      flex-direction:column;
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 16px rgba(0,0,0,.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.1);
     }
 
     .product-card img {
-      width:100%;
-      height:140px;
-      object-fit:cover;
-      border-radius:10px;
-      margin-bottom:10px;
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 8px;
     }
 
-    .product-name { font-size:14px; font-weight:600; margin-bottom:6px; }
-    .product-price { font-size:15px; font-weight:700; color:#16a34a; margin-top:auto; }
+    .product-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
 
+    .product-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: #16a34a;
+      margin-top: auto;
+    }
+
+    /* Wishlist Heart */
+    .wishlist {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 18px;
+      color: #e5e7eb;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .wishlist.active {
+      color: #f43f5e;
+    }
+
+    /* Pagination */
     .pagination {
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      margin:30px 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 30px 0;
+      flex-wrap: wrap;
     }
 
     .pagination button {
-      padding:8px 14px;
-      border:none;
-      border-radius:6px;
-      background:#e5e7eb;
-      cursor:pointer;
-      font-weight:600;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #e5e7eb;
+      font-weight: 600;
+      transition: background 0.2s;
     }
 
     .pagination button.active {
-      background:#2563eb;
-      color:#fff;
+      background: #2563eb;
+      color: #fff;
     }
 
-    footer { background:#1f2937; color:#cbd5f5; margin-top:40px; }
+    /* Footer */
+    footer {
+      background: #1f2937;
+      color: #cbd5f5;
+      margin-top: 40px;
+    }
 
     .footer-content {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:30px;
-      padding:40px 24px;
-      max-width:1200px;
-      margin:auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 30px 16px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    footer h4 { color:#fff; margin-bottom:12px; }
+    footer h4 {
+      color: #fff;
+      margin-bottom: 12px;
+    }
 
     .footer-link {
-      display:block;
-      color:#cbd5f5;
-      font-size:14px;
-      text-decoration:none;
-      margin-bottom:8px;
-      cursor:pointer;
+      display: block;
+      color: #cbd5f5;
+      font-size: 14px;
+      margin-bottom: 6px;
     }
 
     .footer-link:hover {
-      text-decoration:underline;
+      text-decoration: underline;
     }
 
     .copyright {
-      border-top:1px solid #334155;
-      padding:16px;
-      text-align:center;
-      font-size:13px;
+      border-top: 1px solid #334155;
+      padding: 16px;
+      text-align: center;
+      font-size: 13px;
     }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .top-bar { flex-direction: column; align-items: flex-start; }
+      .search { width: 100%; }
+      nav { flex-direction: column; gap: 10px; }
+      .nav-left, .nav-right { flex-wrap: wrap; gap: 10px; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .logo a { font-size: 24px; }
+      .product-card img { height: 100px; }
+      .products h2 { font-size: 20px; }
+      .department-filter button { padding: 5px 10px; font-size: 13px; }
+      .product-name { font-size: 13px; }
+      .product-price { font-size: 14px; }
+    }
+
   </style>
 </head>
-
 <body>
 
 <header>
   <div class="top-bar">
-    <div class="logo"><a href="#" data-action="home">WeBuyHere</a></div>
+    <div class="logo"><a href="#">WeBuyHere</a></div>
     <div class="address">Delivering to: Enter your address</div>
     <div class="search"><input placeholder="Search products and brands"></div>
     <div class="account">
-      <a href="#" data-action="signin">Sign In</a> /
-      <a href="#" data-action="signup">Sign Up</a> | R7 500.00
+      <a href="#">Sign In</a> / <a href="#">Sign Up</a> | R7 500.00
     </div>
   </div>
 </header>
@@ -161,19 +318,17 @@
     <div class="badge">Sat 10:11 AM</div>
   </div>
   <div class="nav-right">
-    <a class="nav-link" href="#" data-action="myshop">My Shop</a>
-    <a class="nav-link" href="#" data-action="findproduct">Find a Product</a>
-    <a class="nav-link" href="#" data-action="stores">Stores & Leaflets</a>
-    <a class="nav-link" href="#" data-action="services">Other Services</a>
+    <a class="nav-link" href="#">My Shop</a>
+    <a class="nav-link" href="#">Find a Product</a>
+    <a class="nav-link" href="#">Stores & Leaflets</a>
+    <a class="nav-link" href="#">Other Services</a>
   </div>
 </nav>
 
 <section class="products">
   <h2>Popular Products</h2>
 
-  <!-- Department Filter -->
   <div class="department-filter">
-    <strong>Shop by Department:</strong>
     <button data-dept="all" class="dept-btn active">All</button>
     <button data-dept="electronics" class="dept-btn">Electronics</button>
     <button data-dept="gaming" class="dept-btn">Gaming</button>
@@ -190,87 +345,37 @@
   </div>
 </section>
 
-<style>
-/* Card & Wishlist Styling */
-.product-card {
-  position: relative;
-  background:#fff;
-  border-radius:14px;
-  padding:14px;
-  box-shadow:0 8px 20px rgba(0,0,0,.05);
-  display:flex;
-  flex-direction:column;
-  transition:transform 0.2s, box-shadow 0.2s;
-}
-.product-card:hover {
-  transform:translateY(-5px);
-  box-shadow:0 12px 24px rgba(0,0,0,0.12);
-}
-
-/* Wishlist Heart Icon */
-.product-card .wishlist {
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:18px;
-  color:#e5e7eb;
-  cursor:pointer;
-  transition: color 0.2s;
-}
-.product-card .wishlist.active { color:#f43f5e; }
-
-/* Department Filter */
-.department-filter {
-  margin-bottom:20px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.department-filter button {
-  padding:6px 14px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:500;
-  background:#e5e7eb;
-  transition: background 0.2s, color 0.2s;
-}
-.department-filter button:hover { background:#2563eb; color:#fff; }
-.department-filter button.active { background:#2563eb; color:#fff; }
-</style>
-
 <footer>
   <div class="footer-content">
     <div>
       <h4>Company</h4>
-      <a class="footer-link" href="about.html">About Us</a>
-      <a class="footer-link" href="terms.html">Terms & Conditions</a>
-      <a class="footer-link" href="privacy.html">Privacy Policy</a>
-      <a class="footer-link" href="cookies.html">Cookie Policy</a>
+      <a class="footer-link" href="#">About Us</a>
+      <a class="footer-link" href="#">Terms & Conditions</a>
+      <a class="footer-link" href="#">Privacy Policy</a>
+      <a class="footer-link" href="#">Cookie Policy</a>
     </div>
     <div>
       <h4>Customer Support</h4>
-      <a class="footer-link" href="help.html">Help Centre</a>
-      <a class="footer-link" href="care.html">Customer Care</a>
-      <a class="footer-link" href="contact.html">Talk to Us</a>
+      <a class="footer-link" href="#">Help Centre</a>
+      <a class="footer-link" href="#">Customer Care</a>
+      <a class="footer-link" href="#">Talk to Us</a>
     </div>
     <div>
       <h4>Get the App</h4>
-      <a class="footer-link" href="appstore.html">App Store</a>
-      <a class="footer-link" href="playstore.html">Google Play</a>
+      <a class="footer-link" href="#">App Store</a>
+      <a class="footer-link" href="#">Google Play</a>
     </div>
   </div>
   <div class="copyright">© 2026 All rights reserved. Shoprite Holdings</div>
 </footer>
 
-
 <script>
-const productGrid = document.getElementById("productGrid");
-const buttons = document.querySelectorAll(".pagination button");
-const PER_PAGE = 20;
+  const productGrid = document.getElementById("productGrid");
+  const buttons = document.querySelectorAll(".pagination button");
+  const PER_PAGE = 20;
 
-// Updated product data with departments
-const productsData = [
+  // Your productsData here (unchanged)...
+  const productsData = [
  // PAGE 1 (remaining products to complete 20 for page 1)
 { name: "Power Bank 20000mAh", price: 699, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg", dept: "electronics" },
 { name: "Laptop Backpack", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjbIUEScaDNkTsIes0bBoFHRiO1J_3SAyP-A&s", dept: "electronics" },
@@ -339,54 +444,49 @@ const productsData = [
   
 ];
 
-// Render products
-function renderProducts(products) {
-  productGrid.innerHTML = "";
-  products.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <span class="wishlist" onclick="this.classList.toggle('active')">&#10084;</span>
-      <img src="${product.image}" alt="${product.name}">
-      <div class="product-name">${product.name}</div>
-      <div class="product-price">R${product.price.toFixed(2)}</div>
-    `;
-    productGrid.appendChild(card);
+  
+
+  function renderProducts(products) {
+    productGrid.innerHTML = "";
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <span class="wishlist" onclick="this.classList.toggle('active')">&#10084;</span>
+        <img src="${product.image}" alt="${product.name}">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">R${product.price.toFixed(2)}</div>
+      `;
+      productGrid.appendChild(card);
+    });
+  }
+
+  function showPage(page, filteredProducts = productsData) {
+    const start = (page-1)*PER_PAGE;
+    const end = page*PER_PAGE;
+    const pageProducts = filteredProducts.slice(start, end);
+    renderProducts(pageProducts);
+    buttons.forEach(b => b.classList.remove("active"));
+    buttons[page-1]?.classList.add("active");
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => showPage(Number(btn.dataset.page)));
   });
-}
 
-// Pagination
-const products = productsData;
-function showPage(page, filteredProducts = products) {
-  const start = (page-1)*PER_PAGE;
-  const end = page*PER_PAGE;
-  const pageProducts = filteredProducts.slice(start, end);
-  renderProducts(pageProducts);
-  buttons.forEach(b => b.classList.remove("active"));
-  buttons[page-1]?.classList.add("active");
-}
-
-// Initial load
-showPage(1);
-
-// Pagination buttons
-buttons.forEach(btn => {
-  btn.addEventListener("click", () => showPage(Number(btn.dataset.page)));
-});
-
-// Department Filter
-const deptButtons = document.querySelectorAll(".dept-btn");
-deptButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    deptButtons.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    const dept = btn.dataset.dept;
-    const filtered = dept==="all" ? products : products.filter(p=>p.dept===dept);
-    showPage(1, filtered);
+  const deptButtons = document.querySelectorAll(".dept-btn");
+  deptButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      deptButtons.forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      const dept = btn.dataset.dept;
+      const filtered = dept==="all" ? productsData : productsData.filter(p=>p.dept===dept);
+      showPage(1, filtered);
+    });
   });
-});
+
+  showPage(1);
 </script>
-
 
 </body>
 </html>
