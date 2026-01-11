@@ -27,6 +27,8 @@
       line-height: 1.5;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+      position: relative;
     }
 
     a {
@@ -282,6 +284,13 @@
       }
     }
 
+    /* Add padding to bottom of cart layout for mobile */
+    @media (max-width: 767px) {
+      .cart-layout {
+        padding-bottom: 20px;
+      }
+    }
+
     /* Cart Items - Mobile Optimized */
     .cart-items {
       background: white;
@@ -480,25 +489,20 @@
       max-width: 300px;
     }
 
-    /* Order Summary - Mobile Sticky */
+    /* Order Summary - Fixed for Mobile Scroll */
     .order-summary {
       background: white;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      position: sticky;
-      bottom: 0;
-      margin: 0 -16px;
-      border-radius: 0;
-      border-top: 1px solid #e5e7eb;
+      margin-top: 20px;
     }
 
     @media (min-width: 768px) {
       .order-summary {
-        position: static;
-        margin: 0;
-        border-radius: 12px;
-        border-top: none;
+        position: sticky;
+        top: 20px;
+        margin-top: 0;
       }
     }
 
@@ -735,6 +739,16 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
+    }
+
+    .hide-on-mobile {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .hide-on-mobile {
+        display: inline;
+      }
     }
 
     /* Back to top button */
@@ -998,11 +1012,39 @@
     }, { passive: true });
   }
 
-  // ... rest of the existing JavaScript functions remain the same ...
-  // (keep all the existing cart functions: saveCartToStorage, renderCartItems, 
-  // renderRecentlyViewed, updateCartSummary, updateCartCount, etc.)
+  let cartItems = JSON.parse(localStorage.getItem('cart')) || [
+    {
+      id: 1,
+      name: "Wireless Bluetooth Headphones with Noise Cancellation",
+      price: 1499.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Hl4vKJ6K00Pq1yFJWj0HUFoqtVWr3KKmkg&s",
+      quantity: 1,
+      selected: true,
+      sku: "HP-BT-NC-001",
+      dept: "electronics"
+    },
+    {
+      id: 2,
+      name: "Smartphone 128GB - Midnight Black",
+      price: 8999.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpVlD3Maw2-UKbnYVw0o-5np7F1BkBBVX3gw&s",
+      quantity: 1,
+      selected: true,
+      sku: "PH-128-MB",
+      dept: "electronics"
+    },
+    {
+      id: 3,
+      name: "Gaming Laptop 16GB RAM 1TB SSD",
+      price: 19999.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEF_5q6FWq58qB4M75h37vRq9Q0JxZPq4A2g&s",
+      quantity: 1,
+      selected: false,
+      sku: "LAP-GAM-16-1TB",
+      dept: "electronics"
+    }
+  ];
 
-  let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
   let recentlyViewed = [
     {
       id: 4,
@@ -1146,6 +1188,7 @@
     cartItems.forEach(item => item.selected = selectAll);
     renderCartItems();
     updateCartSummary();
+    saveCartToStorage();
   }
 
   function toggleItemSelection(itemId) {
@@ -1252,10 +1295,23 @@
       return;
     }
     
-    window.location.href = 'checkout.html';
+    // Save selected items to localStorage for checkout page
+    localStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
+    localStorage.setItem('checkoutTotal', document.getElementById('total').textContent);
+    
+    showNotification("Proceeding to checkout...");
+    setTimeout(() => {
+      window.location.href = 'checkout.html';
+    }, 1000);
   }
 
   function showNotification(message) {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+      existingNotification.remove();
+    }
+    
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
@@ -1269,6 +1325,9 @@
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
+
+  // Initialize the cart on load
+  initCart();
 </script>
 </body>
 </html>
