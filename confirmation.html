@@ -831,7 +831,7 @@
 <header>
   <div class="logo"><a href="index.html">WeShopOnline</a></div>
   <div class="header-actions">
-    <a href="orders.html" class="back-to-shop">
+    <a href="orderhistory.html" class="back-to-shop">
       📋 Order History
     </a>
     <a href="index.html" class="back-to-shop">
@@ -1022,7 +1022,7 @@
     <!-- Email Confirmation -->
     <div class="email-confirmation">
       <p>📧 A detailed receipt has been sent to <span class="email-address" id="customerEmail">customer@example.com</span></p>
-      <p>You can also view this order in your <a href="orders.html" style="color: #2563eb; font-weight: 600;">Order History</a></p>
+      <p>You can also view this order in your <a href="orderhistory.html" style="color: #2563eb; font-weight: 600;">Order History</a></p>
     </div>
 
     <!-- WhatsApp Notification -->
@@ -1363,7 +1363,9 @@
       customer: orderData.customerInfo,
       summary: orderData.summary,
       status: 'Confirmed',
-      paymentMethod: orderData.paymentMethod
+      paymentMethod: orderData.paymentMethod,
+      deliveryOption: orderData.deliveryOption,
+      transactionId: orderData.transactionId
     };
     
     // Check if order already exists
@@ -1389,13 +1391,17 @@
     // No specific event listeners needed for this page
   }
 
-  // Action functions
+  // Action functions - UPDATED TO REDIRECT TO YOUR HTML FILES
   function trackOrder() {
-    alert(`Track your order using order number: ${orderData.orderNumber}\n\nYou can also track from your Order History page.`);
+    // Save current order number to localStorage for tracking page
+    localStorage.setItem('trackingOrderNumber', orderData.orderNumber);
+    // Redirect to tracking.html
+    window.location.href = 'tracking.html';
   }
 
   function viewOrderHistory() {
-    window.location.href = 'orders.html';
+    // Redirect to orderhistory.html
+    window.location.href = 'orderhistory.html';
   }
 
   function downloadInvoice() {
@@ -1510,6 +1516,33 @@
   function addToCalendar() {
     // In a real app, this would generate and download an .ics file
     alert('Delivery dates added to your calendar. In a real implementation, this would download a calendar file.');
+  }
+
+  // Save tracking data for tracking.html
+  function saveTrackingData() {
+    const trackingData = {
+      orderNumber: orderData.orderNumber,
+      status: 'Processing',
+      estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+      carrier: 'Fastway Couriers',
+      trackingNumber: `FW${Date.now().toString().slice(-8)}ZA`,
+      history: [
+        {
+          date: new Date(),
+          status: 'Order Confirmed',
+          location: 'Cape Town Warehouse',
+          description: 'Order received and confirmed'
+        },
+        {
+          date: new Date(Date.now() + 6 * 60 * 60 * 1000), // 6 hours from now
+          status: 'Processing',
+          location: 'Cape Town Warehouse',
+          description: 'Order being prepared for shipment'
+        }
+      ]
+    };
+    
+    localStorage.setItem('trackingData', JSON.stringify(trackingData));
   }
 </script>
 
