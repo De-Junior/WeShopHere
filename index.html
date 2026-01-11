@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -333,6 +334,365 @@
       font-size: 13px;
       color: #9ca3af;
     }
+	
+/* Product Modal/Preview Styles - UPDATED */
+.modal-overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: auto; /* Allow overlay to scroll if needed */
+}
+
+.modal-overlay.active {
+  display: flex !important;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh; /* Limit height to viewport */
+  animation: modalFadeIn 0.3s ease;
+  position: relative;
+  overflow: hidden; /* Hide overflow from rounded corners */
+  display: flex;
+  flex-direction: column; /* Stack header and body */
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+  position: relative;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+  transform: scale(1.1);
+}
+
+.modal-body {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(90vh - 73px); /* Calculate remaining height after header */
+  flex-grow: 1; /* Allow body to take remaining space */
+}
+
+/* Optional: Add scrollbar styling for better UX */
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.modal-image-container {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  height: 100%;
+}
+
+.modal-image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-category {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.modal-product-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.modal-price {
+  font-size: 32px;
+  font-weight: 800;
+  color: #16a34a;
+  margin: 0;
+}
+
+.product-description h3,
+.product-features h3,
+.product-specs h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 12px 0;
+}
+
+.product-description p {
+  color: #6b7280;
+  line-height: 1.6;
+  font-size: 15px;
+  margin: 0;
+}
+
+.product-features {
+  margin: 0;
+}
+
+.product-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-features li {
+  padding: 8px 0;
+  color: #6b7280;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.product-features li:before {
+  content: "✓";
+  color: #10b981;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.product-specs {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.product-specs p {
+  margin: 8px 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.product-specs strong {
+  color: #1f2937;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0; /* Prevent actions from shrinking */
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-to-cart-modal {
+  background: #2563eb;
+  color: white;
+}
+
+.add-to-cart-modal:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.add-to-wishlist-modal {
+  background: #f1f5f9;
+  color: #1f2937;
+  border: 2px solid #e5e7eb;
+}
+
+.add-to-wishlist-modal:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+/* Update product card to be clickable */
+.product-card {
+  cursor: pointer;
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0,0,0,.1);
+}
+
+/* Add quick view button to product card */
+.quick-view-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.product-card:hover .quick-view-btn {
+  opacity: 1;
+}
+
+.quick-view-btn:hover {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+/* Add description to product card */
+.product-description-short {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  height: 36px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+  .modal-body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-height: calc(90vh - 73px); /* Adjust for mobile */
+  }
+  
+  .modal-product-name {
+    font-size: 24px;
+  }
+  
+  .modal-price {
+    font-size: 28px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+/* Prevent scrolling when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Fix for product card images */
+.product-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #f9fafb;
+}
+	
   </style>
 </head>
 
@@ -425,9 +785,36 @@
     </div>
   </div>
 
+<!-- Product Preview Modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Product Details</h2>
+      <button class="close-modal" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+  </div>
+</div>
+
   <div class="copyright">
     © 2026 All rights reserved. Shoprite Holdings
   </div>
+  
+  <!-- Product Preview Modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Product Details</h2>
+      <button class="close-modal" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+  </div>
+</div>
+  
 </footer>
 
 
@@ -439,89 +826,746 @@
   let currentDept = 'all';
   const PER_PAGE = 18; // Changed from 20 to 18
 
-  const productsData = [
-    { name: "Power Bank 20000mAh", price: 699, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg", dept: "electronics" },
-    { name: "Laptop Backpack", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjbIUEScaDNkTsIes0bBoFHRiO1J_3SAyP-A&s", dept: "electronics" },
-    { name: "Gaming Mouse", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s", dept: "gaming" },
-    { name: "Mechanical Keyboard", price: 1199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyAi_LG8QC_eds60Y_C0c9oqc42Jhgef15qQ&s", dept: "gaming" },
-    { name: "27-inch Monitor", price: 3499, image: "https://www.dellonline.co.za/cdn/shop/files/C7FE19E8-896B-4063-924C-247DE7E9FF80_169200_800x.jpg?v=1708345394", dept: "electronics" },
-    { name: "Wireless Mouse", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiAKl0L7f6ryLZ6VB7WILLQbH4EqaQWEvlOg&s", dept: "electronics" },
-    { name: "Bluetooth Speaker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s", dept: "electronics" },
-    { name: "Galaxy S25 Ultra", price: 4999, image: "https://newworld.co.za/cdn/shop/files/2_57a8c048-45cd-4212-99c6-d45fc8f4c13d.webp?v=1750321330", dept: "electronics" },
-    { name: "iPad Pro 11-inch", price: 3299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZcjR-0QtVdJi2hM7dsLkvg50jwAh0dWBfQ&s", dept: "electronics" },
-    { name: "HP N-100 8GB RAM", price: 449, image: "https://www.incredible.co.za/api/catalog/product/2/3/23c1_intel_opp_sebastian_15_ffplusplus_naturalsilver_nt_hdcam_fpr_nonodd_feathe_e53a.png?width=700&height=700&store=incredibleconnection&image-type=image", dept: "electronics" },
-    { name: "Noise Cancelling Earbuds", price: 1499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROaVTiVBI1HzseGEfJjBq2XyEu_b526vXGiA&s", dept: "electronics" },
-    { name: "Webcam Full HD", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjwGvClpbTLVQm4I-S-YkvcQHyU3wZENDV7Q&s", dept: "electronics" },
-    { name: "External Hard Drive 1TB", price: 1299, image: "https://pcinternational.co.za/wp-content/uploads/STKX2000400-1.webp", dept: "electronics" },
-    { name: "USB Flash Drive 64GB", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3M-8pmfQq-Dwc6BwKr2JoNPTwP6og0s07g&s", dept: "electronics" },
-    { name: "WiFi Router", price: 999, image: "https://www.linksys.com/cdn/shop/articles/Tech_Brief_Router_white_48682d98-f68c-451f-910e-b3b15e33dec0.png?v=1763435065&width=1080", dept: "electronics" },
-    { name: "HDMI Cable", price: 129, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqkmirhmblq7v0kyRW877Xqo7gud9TrgnLMQ&s", dept: "electronics" },
-    { name: "Surge Protector", price: 249, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbP7JA_KV02nuoMmtRgBNIWFK47VtjXO6eeQ&s", dept: "electronics" },
-    { name: "Air Fryer 5L", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl_ELvh5THDjkeCeQIl6Qk-u3LPRkaI6Hog&s", dept: "home" },
-    { name: "Vacuum Cleaner", price: 3299, image: "https://www.builders.co.za/media/sys-master%2Froot%2Fh5b%2Fh33%2F14895044526110%2Flarge_null", dept: "home" },
-    { name: "Electric Kettle", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf5-KlDLdBQa1JPvcbdzQ3k3upA2IPQpztTg&s", dept: "home" },
-    { name: "Microwave Oven", price: 2199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk4X6HnwdbrHgsBqIl9p2-Ec9peamb48uMyw&s", dept: "home" },
-    { name: "Toaster", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJgc8qHcJWQLvX7S5tb_S7JyabLZaa0nty9A&s", dept: "home" },
-    { name: "Coffee Maker", price: 1899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgqXl0H59EOD1lRiviNwc4fNcl7UmEhl1wA&s", dept: "home" },
-    { name: "Blender", price: 799, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW_zNwYVNiw4GTkYmr7a_qAfhEscuiauYpdw&s", dept: "home" },
-    { name: "Rice Cooker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkhDAMBp_yyORDETKcmNWa9JFwi68ENGJRKw&s", dept: "home" },
-    { name: "Steam Iron", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgIuPX1_XLib5Vt89TRQjzhkKbxfmvbPqKRw&s", dept: "home" },
-    { name: "Heater Fan", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2W-NU2949MHaY0OHNNWSGiZmBhWb7_HksA&s", dept: "home" },
-    { name: "Office Chair", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
-    { name: "Standing Desk", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
-    { name: "LED Desk Lamp", price: 599, image: "https://retailtherapyonline.co.za/cdn/shop/files/switched-sleek-series-rechargeable-led-adjustable-desk-lamp-622385.png?v=1726753243", dept: "office" },
-    { name: "Notebook Pack", price: 149, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgFlFbTVc24iiI0Y7joCG2nv6M96Diz5Eo_A&s", dept: "office" },
-    { name: "Wireless Printer", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AEuJBxS5F30D5Dtj9zzrWLXdDycnmWepeg&s", dept: "office" },
-    { name: "Ink Cartridge", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-rs4cPTGyVFqCWO3-5zrkRpJtvBHdnH_dFA&s", dept: "office" },
-    { name: "Paper Shredder", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSotzNDzNDgScrsiOokDEZBXHs3mTTW_ZUMJA&s", dept: "office" },
-    { name: "Scientific Calculator", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmDwBA9mL5OKf9bVZx0mlV8hKFljqz3eFQEQ&s", dept: "office" },
-    { name: "Whiteboard", price: 499, image: "https://m.media-amazon.com/images/I/613CIVpz4nL.jpg", dept: "office" },
-    { name: "Desk Organiser", price: 349, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMlS3r8W8u0M46fi3R6moXXLqyTcLVVa2Tw&s", dept: "office" },
-    { name: "PlayStation Controller", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOhJE4igTgTxY4LZgbOq2d5bDoz0dcA9TL3w&s", dept: "gaming" },
-    { name: "Gaming Headset", price: 1499, image: "https://gmedia.playstation.com/is/image/SIEPDC/3d-pulse-headset-product-thumbnail-01-en-14sep21?$facebook$", dept: "gaming" },
-    { name: "Gaming Chair", price: 3999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTrjzBsAVuV2jkkc8Hs7rlyPzwgHXRKHnSBA&s", dept: "gaming" },
-    { name: "Console Cooling Fan", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDBSi_p6LGIetmajBH7zEYLmfoC5fmT9RnZg&s", dept: "gaming" },
-    { name: "Mouse Pad XL", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRldf-GzE1ajqREdeKMbg1VrhgclmbaRWDu9Q&s", dept: "gaming" },
-    { name: "Xbox Battery Pack", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrpdi1smZ9xfA3vdl5hgeV-XQvYRdh3wBhw&s", dept: "gaming" },
-    { name: "Nintendo Switch Case", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS74rJUZ98y82AinOo-5VsxUsrcL-JUylnBww&s", dept: "gaming" },
-    { name: "Racing Wheel", price: 4499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQi7pYlkxsaXUWenuXQBnvBnbqjyVMEvTEA&s", dept: "gaming" },
-    { name: "Game Storage Tower", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4fdj4ZknrK2A-Ntg_M9J69lDh6ot4N2G9A&s", dept: "gaming" },
-    { name: "VR Headset", price: 6999, image: "https://gmedia.playstation.com/is/image/SIEPDC/section3b-headset?fmt=png-alpha&scl=1", dept: "gaming" },
-    { name: "Smart TV 55-inch", price: 8999, image: "https://hisense.co.za/wp-content/uploads/2024/07/55-A6K-TV-2023-v2-1024x1024.jpg", dept: "electronics" },
-    { name: "Soundbar", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJG3ZmNkarkWZvpG01ULEr_MYKGnsr71TjWw&s", dept: "electronics" },
-    { name: "Streaming Device", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwEH4UUW6DlKOcyntoAhsqagAqBplWwIki4A&s", dept: "electronics" },
-    { name: "Security Camera", price: 1299, image: "https://www.incredible.co.za/api/catalog/product/t/a/tapo_c500_image_ecommerce_5349.png?width=700&height=700&store=incredibleconnection&image-type=image", dept: "electronics" },
-    { name: "Smart Doorbell", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMr9uPNHCJxfUrZSt2hLjEqAH1yZd_JAPRwg&s", dept: "electronics" },
-    { name: "LED Strip Lights", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpe-lIdNwV7B99VY1nvbL0h8H92Ea8JC22w&s", dept: "home" },
-    { name: "Portable Projector", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9dbmiRVT8aJFmI9oCzbIvS46k6zhVgwxr_A&s", dept: "electronics" },
-    { name: "Smart Plug", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSe2bDljDGCuS8wDo1PMgWL-Jgst3nz7GM8A&s", dept: "home" },
-    { name: "Robot Vacuum", price: 5999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuPFdv9PsZ2eXexK2FKkBQAihjfu6uAybj9w&s", dept: "home" },
-    { name: "Electric Screwdriver Kit", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQi0YSHs1AoebCYAArQ9ObZ0feEHwdryzmyQ&s", dept: "home" },
-    { name: "Laptop Cooling Pad", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ0j_1uzMfMfS2_0qMhM0tXG2lX5n8x3x5Jw&s", dept: "electronics" },
-    { name: "Wireless Charger", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh6Lm4n1wL8k3v2q5s8w9x0z1a2b3c4d5e6f&s", dept: "electronics" },
-    { name: "USB-C Hub", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk9l8m7n6p5o4q3r2s1t0u9v8w7x6y5z4a3b&s", dept: "electronics" },
-    { name: "Gaming Mouse Pad", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c&s", dept: "gaming" },
-    // Adding more products to reach 90 total (18 × 5 pages)
-    { name: "Smart Watch", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b&s", dept: "electronics" },
-    { name: "Fitness Tracker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcUl9m0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c&s", dept: "electronics" },
-    { name: "Portable Speaker", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcVm8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", dept: "electronics" },
-    { name: "Camera Lens", price: 1999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcWn7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3e&s", dept: "electronics" },
-    { name: "Tripod Stand", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcXo6n7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d2e&s", dept: "electronics" },
-    { name: "Gaming Monitor", price: 4599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcYn5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", dept: "gaming" },
-    { name: "RGB Keyboard", price: 1599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcZo4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", dept: "gaming" },
-    { name: "Gaming Desk", price: 3299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcAp3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", dept: "gaming" },
-    { name: "Controller Charger", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcBq2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", dept: "gaming" },
-    { name: "Refrigerator", price: 7999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcCr1n2o3p4q5r6s7t8u9v0w1x2y3z4a5b6c7d&s", dept: "home" },
-    { name: "Washing Machine", price: 6999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcDs0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c6d&s", dept: "home" },
-    { name: "Dishwasher", price: 5499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcEt9n0o1p2q3r4s5t6u7v8w9x0y1z2a3b4c5d&s", dept: "home" },
-    { name: "Air Purifier", price: 1999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcFu8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", dept: "home" },
-    { name: "Humidifier", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcGv7n8o9p0q1r2s3t4u5v6w7x8y9z0a1b2c3d&s", dept: "home" },
-    { name: "File Cabinet", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcHw6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d&s", dept: "office" },
-    { name: "Conference Phone", price: 1799, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcIx5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", dept: "office" },
-    { name: "Document Scanner", price: 1499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcJy4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", dept: "office" },
-    { name: "Label Maker", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcKz3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", dept: "office" },
-    { name: "Stapler Set", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcL2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", dept: "office" }
-  ];
+const productsData = [
+  { 
+    name: "Power Bank 20000mAh", 
+    price: 699, 
+    image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg", 
+    dept: "electronics",
+    description: "High-capacity portable charger with dual USB ports. Perfect for charging smartphones, tablets, and other USB devices on the go. Features fast charging technology and built-in safety protections.",
+    features: ["20000mAh capacity", "Dual USB output ports", "Fast charging support", "LED battery indicator", "Built-in safety protections"],
+    sku: "PWR-20000-001"
+  },
+  { 
+    name: "Laptop Backpack", 
+    price: 599, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjbIUEScaDNkTsIes0bBoFHRiO1J_3SAyP-A&s", 
+    dept: "electronics",
+    description: "Water-resistant laptop backpack with dedicated compartments for 15.6-inch laptops, tablets, and accessories. Ergonomic design with padded shoulder straps for comfort.",
+    features: ["Fits 15.6-inch laptops", "Water-resistant material", "Multiple compartments", "Padded shoulder straps", "USB charging port"],
+    sku: "BAG-LT-015"
+  },
+  { 
+    name: "Gaming Mouse", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s", 
+    dept: "gaming",
+    description: "Professional gaming mouse with customizable RGB lighting, programmable buttons, and high-precision sensor. Perfect for competitive gaming and productivity.",
+    features: ["16000 DPI optical sensor", "8 programmable buttons", "RGB lighting effects", "1ms response time", "Braided cable"],
+    sku: "GM-001-RGB"
+  },
+  { 
+    name: "Mechanical Keyboard", 
+    price: 1199, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyAi_LG8QC_eds60Y_C0c9oqc42Jhgef15qQ&s", 
+    dept: "gaming",
+    description: "Full-sized mechanical keyboard with customizable RGB backlighting, anti-ghosting keys, and detachable wrist rest. Features Cherry MX equivalent switches.",
+    features: ["Mechanical switches", "RGB backlighting", "N-key rollover", "Detachable wrist rest", "Media controls"],
+    sku: "KB-MECH-001"
+  },
+  { 
+    name: "27-inch Monitor", 
+    price: 3499, 
+    image: "https://www.dellonline.co.za/cdn/shop/files/C7FE19E8-896B-4063-924C-247DE7E9FF80_169200_800x.jpg?v=1708345394", 
+    dept: "electronics",
+    description: "27-inch 4K UHD monitor with IPS panel for accurate colors and wide viewing angles. Perfect for gaming, graphic design, and professional work.",
+    features: ["27-inch 4K display", "IPS panel technology", "144Hz refresh rate", "AMD FreeSync support", "VESA mount compatible"],
+    sku: "MON-27-4K"
+  },
+  { 
+    name: "Wireless Mouse", 
+    price: 299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiAKl0L7f6ryLZ6VB7WILLQbH4EqaQWEvlOg&s", 
+    dept: "electronics",
+    description: "Compact wireless mouse with 2.4GHz connectivity and long battery life. Silent click technology and ergonomic design for comfortable use.",
+    features: ["2.4GHz wireless", "12-month battery life", "Silent clicks", "Plug-and-play", "Compact design"],
+    sku: "MW-001-WL"
+  },
+  { 
+    name: "Bluetooth Speaker", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s", 
+    dept: "electronics",
+    description: "Portable Bluetooth speaker with 360° sound, waterproof design, and 12-hour battery life. Perfect for outdoor activities and parties.",
+    features: ["IPX7 waterproof", "12-hour battery", "360° sound", "Bluetooth 5.0", "Built-in microphone"],
+    sku: "SPK-BT-001"
+  },
+  { 
+    name: "Galaxy S25 Ultra", 
+    price: 4999, 
+    image: "https://newworld.co.za/cdn/shop/files/2_57a8c048-45cd-4212-99c6-d45fc8f4c13d.webp?v=1750321330", 
+    dept: "electronics",
+    description: "Flagship smartphone with advanced camera system, Snapdragon processor, and stunning Dynamic AMOLED display. Includes S Pen support.",
+    features: ["6.8-inch Dynamic AMOLED", "200MP camera system", "Snapdragon 8 Gen 4", "12GB RAM + 256GB", "S Pen included"],
+    sku: "PHN-S25U-256"
+  },
+  { 
+    name: "iPad Pro 11-inch", 
+    price: 3299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZcjR-0QtVdJi2hM7dsLkvg50jwAh0dWBfQ&s", 
+    dept: "electronics",
+    description: "Powerful tablet with M3 chip, Liquid Retina display, and compatibility with Apple Pencil 2. Ideal for creative professionals and students.",
+    features: ["11-inch Liquid Retina", "Apple M3 chip", "ProMotion technology", "Face ID", "USB-C port"],
+    sku: "TAB-IPAD-11"
+  },
+  { 
+    name: "HP N-100 8GB RAM", 
+    price: 449, 
+    image: "https://www.incredible.co.za/api/catalog/product/2/3/23c1_intel_opp_sebastian_15_ffplusplus_naturalsilver_nt_hdcam_fpr_nonodd_feathe_e53a.png?width=700&height=700&store=incredibleconnection&image-type=image", 
+    dept: "electronics",
+    description: "Budget-friendly laptop with Intel N100 processor, 8GB RAM, and 256GB SSD. Perfect for everyday tasks, browsing, and light productivity.",
+    features: ["Intel N100 processor", "8GB DDR4 RAM", "256GB SSD", "15.6-inch HD display", "Windows 11 Home"],
+    sku: "LAP-HP-N100"
+  },
+  { 
+    name: "Noise Cancelling Earbuds", 
+    price: 1499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROaVTiVBI1HzseGEfJjBq2XyEu_b526vXGiA&s", 
+    dept: "electronics",
+    description: "True wireless earbuds with active noise cancellation, transparency mode, and 30-hour total battery life with charging case.",
+    features: ["Active noise cancellation", "Transparency mode", "30-hour battery", "Wireless charging", "IPX4 water resistant"],
+    sku: "BUD-NC-TWS"
+  },
+  { 
+    name: "Webcam Full HD", 
+    price: 699, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjwGvClpbTLVQm4I-S-YkvcQHyU3wZENDV7Q&s", 
+    dept: "electronics",
+    description: "1080p Full HD webcam with built-in microphone, autofocus, and low-light correction. Perfect for video calls, streaming, and recording.",
+    features: ["1080p Full HD", "Built-in microphone", "Autofocus", "Low-light correction", "Universal clip mount"],
+    sku: "CAM-WEB-1080"
+  },
+  { 
+    name: "External Hard Drive 1TB", 
+    price: 1299, 
+    image: "https://pcinternational.co.za/wp-content/uploads/STKX2000400-1.webp", 
+    dept: "electronics",
+    description: "Portable external hard drive with 1TB storage capacity, USB 3.0 interface, and automatic backup software included.",
+    features: ["1TB storage capacity", "USB 3.0 interface", "Backup software included", "Password protection", "Compact design"],
+    sku: "HDD-EXT-1TB"
+  },
+  { 
+    name: "USB Flash Drive 64GB", 
+    price: 199, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3M-8pmfQq-Dwc6BwKr2JoNPTwP6og0s07g&s", 
+    dept: "electronics",
+    description: "High-speed USB 3.0 flash drive with 64GB storage capacity. Perfect for transferring files, backups, and storing media.",
+    features: ["64GB storage", "USB 3.0 speed", "Compact design", "LED activity light", "5-year warranty"],
+    sku: "USB-64GB-001"
+  },
+  { 
+    name: "WiFi Router", 
+    price: 999, 
+    image: "https://www.linksys.com/cdn/shop/articles/Tech_Brief_Router_white_48682d98-f68c-451f-910e-b3b15e33dec0.png?v=1763435065&width=1080", 
+    dept: "electronics",
+    description: "Dual-band WiFi 6 router with mesh capability, parental controls, and coverage up to 2000 sq ft. Supports multiple devices simultaneously.",
+    features: ["WiFi 6 technology", "Dual-band (2.4GHz & 5GHz)", "Mesh capable", "Parental controls", "4 Gigabit ports"],
+    sku: "RT-WIFI6-001"
+  },
+  { 
+    name: "HDMI Cable", 
+    price: 129, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqkmirhmblq7v0kyRW877Xqo7gud9TrgnLMQ&s", 
+    dept: "electronics",
+    description: "High-speed HDMI 2.0 cable with Ethernet support. Supports 4K video at 60Hz, HDR, and 3D content. Gold-plated connectors.",
+    features: ["HDMI 2.0 certified", "4K @ 60Hz support", "Ethernet channel", "Gold-plated connectors", "Nylon braided"],
+    sku: "CBL-HDMI-20"
+  },
+  { 
+    name: "Surge Protector", 
+    price: 249, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbP7JA_KV02nuoMmtRgBNIWFK47VtjXO6eeQ&s", 
+    dept: "electronics",
+    description: "6-outlet surge protector with 2 USB charging ports, 2000 joule protection, and LED power indicator. Protects sensitive electronics.",
+    features: ["6 AC outlets", "2 USB ports", "2000 joule protection", "LED power indicator", "Fireproof housing"],
+    sku: "SPT-6OUT-USB"
+  },
+  { 
+    name: "Air Fryer 5L", 
+    price: 2499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl_ELvh5THDjkeCeQIl6Qk-u3LPRkaI6Hog&s", 
+    dept: "home",
+    description: "Digital air fryer with 5-liter capacity, 8 preset cooking functions, and touch control panel. Cooks with up to 80% less oil.",
+    features: ["5-liter capacity", "8 preset functions", "Digital touch panel", "Non-stick basket", "Auto shut-off"],
+    sku: "AIR-FRY-5L"
+  },
+  { 
+    name: "Vacuum Cleaner", 
+    price: 3299, 
+    image: "https://www.builders.co.za/media/sys-master%2Froot%2Fh5b%2Fh33%2F14895044526110%2Flarge_null", 
+    dept: "home",
+    description: "Bagless upright vacuum cleaner with HEPA filtration, multiple attachments, and adjustable suction power. Perfect for carpets and hard floors.",
+    features: ["HEPA filtration", "Bagless design", "Multiple attachments", "Adjustable suction", "35ft power cord"],
+    sku: "VAC-UPR-001"
+  },
+  { 
+    name: "Electric Kettle", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf5-KlDLdBQa1JPvcbdzQ3k3upA2IPQpztTg&s", 
+    dept: "home",
+    description: "1.7-liter stainless steel electric kettle with auto shut-off, boil-dry protection, and removable filter. Boils water in minutes.",
+    features: ["1.7-liter capacity", "Stainless steel", "Auto shut-off", "Boil-dry protection", "360° base"],
+    sku: "KET-ELEC-17"
+  },
+  { 
+    name: "Microwave Oven", 
+    price: 2199, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk4X6HnwdbrHgsBqIl9p2-Ec9peamb48uMyw&s", 
+    dept: "home",
+    description: "25-liter microwave oven with grill function, 10 power levels, and auto-cook menus. Features child safety lock.",
+    features: ["25-liter capacity", "Grill function", "10 power levels", "Auto-cook menus", "Child safety lock"],
+    sku: "MW-OVEN-25L"
+  },
+  { 
+    name: "Toaster", 
+    price: 399, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJgc8qHcJWQLvX7S5tb_S7JyabLZaa0nty9A&s", 
+    dept: "home",
+    description: "2-slice toaster with 6 browning settings, removable crumb tray, and cancel function. Extra-wide slots for various bread types.",
+    features: ["2-slice capacity", "6 browning settings", "Removable crumb tray", "Cancel function", "Extra-wide slots"],
+    sku: "TOST-2SL-001"
+  },
+  { 
+    name: "Coffee Maker", 
+    price: 1899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgqXl0H59EOD1lRiviNwc4fNcl7UmEhl1wA&s", 
+    dept: "home",
+    description: "12-cup programmable coffee maker with thermal carafe, strength control, and auto shut-off. Keeps coffee hot for hours.",
+    features: ["12-cup capacity", "Thermal carafe", "Programmable timer", "Strength control", "Auto shut-off"],
+    sku: "COFF-MKR-12"
+  },
+  { 
+    name: "Blender", 
+    price: 799, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW_zNwYVNiw4GTkYmr7a_qAfhEscuiauYpdw&s", 
+    dept: "home",
+    description: "High-speed blender with 1.5-liter glass jar, 6 blades, and multiple speed settings. Perfect for smoothies, soups, and sauces.",
+    features: ["1.5-liter glass jar", "6-blade design", "Multiple speeds", "Pulse function", "Easy clean"],
+    sku: "BLEND-15L-GL"
+  },
+  { 
+    name: "Rice Cooker", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkhDAMBp_yyORDETKcmNWa9JFwi68ENGJRKw&s", 
+    dept: "home",
+    description: "5-cup rice cooker with keep-warm function, non-stick inner pot, and steam tray. Cooks perfect rice every time.",
+    features: ["5-cup capacity", "Keep-warm function", "Non-stick pot", "Steam tray included", "Auto shut-off"],
+    sku: "RICE-COOK-5"
+  },
+  { 
+    name: "Steam Iron", 
+    price: 699, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgIuPX1_XLib5Vt89TRQjzhkKbxfmvbPqKRw&s", 
+    dept: "home",
+    description: "Powerful steam iron with non-stick soleplate, variable steam control, and anti-drip system. Vertical steam function included.",
+    features: ["Non-stick soleplate", "Variable steam control", "Anti-drip system", "Vertical steam", "Self-cleaning"],
+    sku: "IRON-STEAM-001"
+  },
+  { 
+    name: "Heater Fan", 
+    price: 999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2W-NU2949MHaY0OHNNWSGiZmBhWb7_HksA&s", 
+    dept: "home",
+    description: "Ceramic heater fan with 2 heat settings, thermostat control, and overheat protection. Oscillates for even heat distribution.",
+    features: ["Ceramic heating", "2 heat settings", "Thermostat control", "Oscillation", "Overheat protection"],
+    sku: "HTR-FAN-CER"
+  },
+  { 
+    name: "Office Chair", 
+    price: 2999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", 
+    dept: "office",
+    description: "Ergonomic office chair with lumbar support, adjustable height, and 360° swivel. Breathable mesh back for comfort.",
+    features: ["Lumbar support", "Adjustable height", "360° swivel", "Breathable mesh", "Armrests included"],
+    sku: "CHAIR-OFF-ERG"
+  },
+  { 
+    name: "Standing Desk", 
+    price: 3499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", 
+    dept: "office",
+    description: "Electric height-adjustable standing desk with memory presets and sturdy steel frame. Promotes healthy work habits.",
+    features: ["Electric adjustment", "Memory presets", "Sturdy steel frame", "Cable management", "Spacious desktop"],
+    sku: "DESK-STND-ELEC"
+  },
+  { 
+    name: "LED Desk Lamp", 
+    price: 599, 
+    image: "https://retailtherapyonline.co.za/cdn/shop/files/switched-sleek-series-rechargeable-led-adjustable-desk-lamp-622385.png?v=1726753243", 
+    dept: "office",
+    description: "Adjustable LED desk lamp with touch control, 5 brightness levels, and USB charging port. Saves energy with long-lasting LEDs.",
+    features: ["Touch control", "5 brightness levels", "USB charging port", "Adjustable arm", "Eye-protection mode"],
+    sku: "LAMP-LED-DSK"
+  },
+  { 
+    name: "Notebook Pack", 
+    price: 149, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgFlFbTVc24iiI0Y7joCG2nv6M96Diz5Eo_A&s", 
+    dept: "office",
+    description: "Pack of 5 A4-sized notebooks with 120 pages each. Premium quality paper suitable for writing, sketching, and note-taking.",
+    features: ["Pack of 5 notebooks", "A4 size", "120 pages each", "Premium paper", "Hard covers"],
+    sku: "NB-PACK-5"
+  },
+  { 
+    name: "Wireless Printer", 
+    price: 2499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AEuJBxS5F30D5Dtj9zzrWLXdDycnmWepeg&s", 
+    dept: "office",
+    description: "All-in-one wireless printer with scan, copy, and fax functions. Compatible with mobile printing via app.",
+    features: ["Wireless printing", "Scan, copy, fax", "Mobile printing", "Auto duplex", "Ink monitoring"],
+    sku: "PRNT-WIFI-001"
+  },
+  { 
+    name: "Ink Cartridge", 
+    price: 999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-rs4cPTGyVFqCWO3-5zrkRpJtvBHdnH_dFA&s", 
+    dept: "office",
+    description: "High-yield ink cartridge set (black + color) compatible with popular printer models. OEM quality with consistent performance.",
+    features: ["High-yield capacity", "Black + color set", "OEM compatible", "Reliable performance", "Easy installation"],
+    sku: "INK-SET-HY"
+  },
+  { 
+    name: "Paper Shredder", 
+    price: 1299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSotzNDzNDgScrsiOokDEZBXHs3mTTW_ZUMJA&s", 
+    dept: "office",
+    description: "Cross-cut paper shredder with 8-sheet capacity, auto start/stop, and safety features. Ideal for document security.",
+    features: ["Cross-cut shredding", "8-sheet capacity", "Auto start/stop", "Safety features", "Waste bin included"],
+    sku: "SHRED-8SHT"
+  },
+  { 
+    name: "Scientific Calculator", 
+    price: 299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmDwBA9mL5OKf9bVZx0mlV8hKFljqz3eFQEQ&s", 
+    dept: "office",
+    description: "Advanced scientific calculator with 300+ functions, solar power, and large display. Perfect for students and professionals.",
+    features: ["300+ functions", "Solar powered", "Large display", "Statistical functions", "Hard case included"],
+    sku: "CALC-SCI-001"
+  },
+  { 
+    name: "Whiteboard", 
+    price: 499, 
+    image: "https://m.media-amazon.com/images/I/613CIVpz4nL.jpg", 
+    dept: "office",
+    description: "90x60cm magnetic whiteboard with aluminum frame, markers, and eraser included. Wall mountable or freestanding.",
+    features: ["90x60cm size", "Magnetic surface", "Aluminum frame", "Markers included", "Wall mountable"],
+    sku: "WHTBRD-90X60"
+  },
+  { 
+    name: "Desk Organiser", 
+    price: 349, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMlS3r8W8u0M46fi3R6moXXLqyTcLVVa2Tw&s", 
+    dept: "office",
+    description: "5-compartment desk organizer for pens, clips, phones, and small items. Made from durable ABS plastic.",
+    features: ["5 compartments", "ABS plastic", "Modern design", "Non-slip base", "Easy assembly"],
+    sku: "ORG-DESK-5"
+  },
+  { 
+    name: "PlayStation Controller", 
+    price: 1299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOhJE4igTgTxY4LZgbOq2d5bDoz0dcA9TL3w&s", 
+    dept: "gaming",
+    description: "Official wireless DualSense controller with adaptive triggers, haptic feedback, and built-in microphone. Compatible with PS5.",
+    features: ["Wireless connectivity", "Adaptive triggers", "Haptic feedback", "Built-in microphone", "Motion sensors"],
+    sku: "CTRL-PS5-DS"
+  },
+  { 
+    name: "Gaming Headset", 
+    price: 1499, 
+    image: "https://gmedia.playstation.com/is/image/SIEPDC/3d-pulse-headset-product-thumbnail-01-en-14sep21?$facebook$", 
+    dept: "gaming",
+    description: "Wireless gaming headset with 3D audio support, noise-canceling microphone, and up to 12-hour battery life.",
+    features: ["Wireless", "3D audio support", "Noise-canceling mic", "12-hour battery", "Comfortable ear cups"],
+    sku: "HEAD-GAME-WL"
+  },
+  { 
+    name: "Gaming Chair", 
+    price: 3999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTrjzBsAVuV2jkkc8Hs7rlyPzwgHXRKHnSBA&s", 
+    dept: "gaming",
+    description: "Ergonomic gaming chair with adjustable lumbar support, reclining function, and premium PU leather upholstery.",
+    features: ["Ergonomic design", "Adjustable lumbar", "Reclining function", "PU leather", "Metal frame"],
+    sku: "CHAIR-GAME-ERG"
+  },
+  { 
+    name: "Console Cooling Fan", 
+    price: 599, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDBSi_p6LGIetmajBH7zEYLmfoC5fmT9RnZg&s", 
+    dept: "gaming",
+    description: "External cooling fan for gaming consoles with adjustable speed, LED lights, and quiet operation. Prevents overheating.",
+    features: ["Adjustable speed", "LED lighting", "Quiet operation", "Easy installation", "Overheat prevention"],
+    sku: "FAN-CONS-EXT"
+  },
+  { 
+    name: "Mouse Pad XL", 
+    price: 299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRldf-GzE1ajqREdeKMbg1VrhgclmbaRWDu9Q&s", 
+    dept: "gaming",
+    description: "Extra-large gaming mouse pad with stitched edges, non-slip rubber base, and smooth surface for precise mouse control.",
+    features: ["Extra-large size", "Stitched edges", "Non-slip base", "Smooth surface", "Water resistant"],
+    sku: "PAD-MOUSE-XL"
+  },
+  { 
+    name: "Xbox Battery Pack", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrpdi1smZ9xfA3vdl5hgeV-XQvYRdh3wBhw&s", 
+    dept: "gaming",
+    description: "Rechargeable battery pack for Xbox controllers with charging cable and LED indicators. Provides up to 30 hours of play.",
+    features: ["Rechargeable", "30-hour battery", "LED indicators", "Charging cable", "Fast charging"],
+    sku: "BATT-XBOX-RCH"
+  },
+  { 
+    name: "Nintendo Switch Case", 
+    price: 399, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS74rJUZ98y82AinOo-5VsxUsrcL-JUylnBww&s", 
+    dept: "gaming",
+    description: "Hard-shell protective case for Nintendo Switch with game cartridge storage and carrying handle. Water-resistant material.",
+    features: ["Hard-shell protection", "Game storage", "Carrying handle", "Water-resistant", "Fits console & accessories"],
+    sku: "CASE-NSWITCH"
+  },
+  { 
+    name: "Racing Wheel", 
+    price: 4499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQi7pYlkxsaXUWenuXQBnvBnbqjyVMEvTEA&s", 
+    dept: "gaming",
+    description: "Force feedback racing wheel with pedal set and gear shifter. Compatible with PC and major gaming consoles.",
+    features: ["Force feedback", "Pedal set included", "Gear shifter", "Multi-platform", "Adjustable clamp"],
+    sku: "WHEEL-RACE-FF"
+  },
+  { 
+    name: "Game Storage Tower", 
+    price: 699, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4fdj4ZknrK2A-Ntg_M9J69lDh6ot4N2G9A&s", 
+    dept: "gaming",
+    description: "Organized storage tower for game discs, controllers, and accessories. Holds up to 60 games across multiple platforms.",
+    features: ["Holds 60+ games", "Controller storage", "Adjustable shelves", "Modern design", "Easy assembly"],
+    sku: "STOR-GAME-60"
+  },
+  { 
+    name: "VR Headset", 
+    price: 6999, 
+    image: "https://gmedia.playstation.com/is/image/SIEPDC/section3b-headset?fmt=png-alpha&scl=1", 
+    dept: "gaming",
+    description: "Virtual reality headset with 4K resolution, 120Hz refresh rate, and inside-out tracking. No external sensors required.",
+    features: ["4K resolution", "120Hz refresh", "Inside-out tracking", "Built-in audio", "Comfortable fit"],
+    sku: "VR-4K-120HZ"
+  },
+  { 
+    name: "Smart TV 55-inch", 
+    price: 8999, 
+    image: "https://hisense.co.za/wp-content/uploads/2024/07/55-A6K-TV-2023-v2-1024x1024.jpg", 
+    dept: "electronics",
+    description: "55-inch 4K Smart TV with HDR10+, built-in streaming apps, and voice control. Perfect for entertainment and gaming.",
+    features: ["55-inch 4K", "HDR10+", "Smart TV platform", "Voice control", "Multiple HDMI ports"],
+    sku: "TV-55-SMART"
+  },
+  { 
+    name: "Soundbar", 
+    price: 2999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJG3ZmNkarkWZvpG01ULEr_MYKGnsr71TjWw&s", 
+    dept: "electronics",
+    description: "3.1 channel soundbar with wireless subwoofer, Bluetooth connectivity, and multiple sound modes. Enhances TV audio dramatically.",
+    features: ["3.1 channel", "Wireless subwoofer", "Bluetooth", "Multiple sound modes", "HDMI ARC"],
+    sku: "SNDBAR-3.1"
+  },
+  { 
+    name: "Streaming Device", 
+    price: 999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwEH4UUW6DlKOcyntoAhsqagAqBplWwIki4A&s", 
+    dept: "electronics",
+    description: "4K streaming device with voice remote, thousands of apps, and smooth performance. Turns any TV into a smart TV.",
+    features: ["4K streaming", "Voice remote", "Thousands of apps", "Easy setup", "Compact design"],
+    sku: "STRM-4K-VOICE"
+  },
+  { 
+    name: "Security Camera", 
+    price: 1299, 
+    image: "https://www.incredible.co.za/api/catalog/product/t/a/tapo_c500_image_ecommerce_5349.png?width=700&height=700&store=incredibleconnection&image-type=image", 
+    dept: "electronics",
+    description: "Wireless security camera with 1080p resolution, night vision, and motion detection. Connects to smartphone app.",
+    features: ["1080p resolution", "Night vision", "Motion detection", "Wireless", "Smartphone app"],
+    sku: "CAM-SEC-1080"
+  },
+  { 
+    name: "Smart Doorbell", 
+    price: 2499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMr9uPNHCJxfUrZSt2hLjEqAH1yZd_JAPRwg&s", 
+    dept: "electronics",
+    description: "Video doorbell with two-way audio, motion alerts, and cloud storage. See and speak to visitors from your phone.",
+    features: ["Video doorbell", "Two-way audio", "Motion alerts", "Cloud storage", "Weather resistant"],
+    sku: "DOORBELL-VID"
+  },
+  { 
+    name: "LED Strip Lights", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpe-lIdNwV7B99VY1nvbL0h8H92Ea8JC22w&s", 
+    dept: "home",
+    description: "RGB LED strip lights with remote control, multiple lighting modes, and waterproof design. Perfect for ambiance.",
+    features: ["RGB colors", "Remote control", "Multiple modes", "Waterproof", "Self-adhesive"],
+    sku: "LED-STRIP-RGB"
+  },
+  { 
+    name: "Portable Projector", 
+    price: 3499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9dbmiRVT8aJFmI9oCzbIvS46k6zhVgwxr_A&s", 
+    dept: "electronics",
+    description: "Portable HD projector with built-in battery, Bluetooth speakers, and smartphone compatibility. Great for movies and presentations.",
+    features: ["Portable design", "Built-in battery", "Bluetooth speakers", "Smartphone compatible", "HD resolution"],
+    sku: "PROJ-PORT-HD"
+  },
+  { 
+    name: "Smart Plug", 
+    price: 299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSe2bDljDGCuS8wDo1PMgWL-Jgst3nz7GM8A&s", 
+    dept: "home",
+    description: "WiFi smart plug with voice control, scheduling, and remote access. Control appliances from anywhere via smartphone.",
+    features: ["WiFi connectivity", "Voice control", "Scheduling", "Remote access", "Energy monitoring"],
+    sku: "PLUG-SMART-WIFI"
+  },
+  { 
+    name: "Robot Vacuum", 
+    price: 5999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuPFdv9PsZ2eXexK2FKkBQAihjfu6uAybj9w&s", 
+    dept: "home",
+    description: "Smart robot vacuum with laser mapping, app control, and self-emptying base. Cleans automatically on schedule.",
+    features: ["Laser mapping", "App control", "Self-emptying", "Scheduled cleaning", "Multi-surface cleaning"],
+    sku: "VAC-ROBOT-SMART"
+  },
+  { 
+    name: "Electric Screwdriver Kit", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQi0YSHs1AoebCYAArQ9ObZ0feEHwdryzmyQ&s", 
+    dept: "home",
+    description: "Cordless electric screwdriver with 30+ bits, adjustable torque, and LED light. Perfect for DIY projects.",
+    features: ["Cordless", "30+ bits included", "Adjustable torque", "LED light", "Rechargeable"],
+    sku: "SCRWDRV-ELEC"
+  },
+  { 
+    name: "Laptop Cooling Pad", 
+    price: 399, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ0j_1uzMfMfS2_0qMhM0tXG2lX5n8x3x5Jw&s", 
+    dept: "electronics",
+    description: "USB-powered laptop cooling pad with 5 fans, adjustable height, and quiet operation. Prevents laptop overheating.",
+    features: ["5 cooling fans", "USB powered", "Adjustable height", "Quiet operation", "Ergonomic design"],
+    sku: "PAD-COOL-LT"
+  },
+  { 
+    name: "Wireless Charger", 
+    price: 299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh6Lm4n1wL8k3v2q5s8w9x0z1a2b3c4d5e6f&s", 
+    dept: "electronics",
+    description: "Fast wireless charger with LED indicator, non-slip surface, and compatibility with Qi-enabled devices.",
+    features: ["Fast charging", "LED indicator", "Non-slip surface", "Qi compatible", "Compact design"],
+    sku: "CHGR-WLESS-FAST"
+  },
+  { 
+    name: "USB-C Hub", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk9l8m7n6p5o4q3r2s1t0u9v8w7x6y5z4a3b&s", 
+    dept: "electronics",
+    description: "7-in-1 USB-C hub with HDMI, USB ports, SD card readers, and Ethernet. Expands connectivity for laptops and tablets.",
+    features: ["7-in-1 ports", "4K HDMI", "USB 3.0 ports", "SD card readers", "Ethernet port"],
+    sku: "HUB-USB-C-7IN1"
+  },
+  { 
+    name: "Gaming Mouse Pad", 
+    price: 199, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c&s", 
+    dept: "gaming",
+    description: "RGB gaming mouse pad with 16.8 million colors, multiple lighting effects, and smooth tracking surface.",
+    features: ["RGB lighting", "Multiple effects", "Smooth surface", "Non-slip base", "Large size"],
+    sku: "PAD-GAME-RGB"
+  },
+  { 
+    name: "Smart Watch", 
+    price: 2499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b&s", 
+    dept: "electronics",
+    description: "Advanced smartwatch with health monitoring, GPS, and smartphone notifications. Tracks workouts and daily activity.",
+    features: ["Health monitoring", "GPS tracking", "Smartphone notifications", "Water resistant", "7-day battery"],
+    sku: "WATCH-SMART-001"
+  },
+  { 
+    name: "Fitness Tracker", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcUl9m0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c&s", 
+    dept: "electronics",
+    description: "Activity tracker with heart rate monitor, sleep tracking, and smartphone connectivity. Motivates healthy habits.",
+    features: ["Heart rate monitor", "Sleep tracking", "Smartphone connectivity", "Water resistant", "14-day battery"],
+    sku: "TRACK-FIT-HR"
+  },
+  { 
+    name: "Portable Speaker", 
+    price: 699, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcVm8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", 
+    dept: "electronics",
+    description: "Compact portable speaker with impressive sound quality, Bluetooth 5.0, and 10-hour battery life. Perfect for travel.",
+    features: ["Compact design", "Bluetooth 5.0", "10-hour battery", "Rich bass", "Hands-free calling"],
+    sku: "SPK-PORT-BT"
+  },
+  { 
+    name: "Camera Lens", 
+    price: 1999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcWn7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3e&s", 
+    dept: "electronics",
+    description: "Professional camera lens with wide aperture, image stabilization, and sharp optics. Compatible with major DSLR brands.",
+    features: ["Wide aperture", "Image stabilization", "Sharp optics", "Fast autofocus", "Durable construction"],
+    sku: "LENS-PRO-50MM"
+  },
+  { 
+    name: "Tripod Stand", 
+    price: 599, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcXo6n7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d2e&s", 
+    dept: "electronics",
+    description: "Aluminum tripod with adjustable height, phone holder, and remote shutter. Stable support for cameras and smartphones.",
+    features: ["Adjustable height", "Phone holder", "Remote shutter", "Aluminum construction", "Carrying bag"],
+    sku: "TRIPOD-ALU-001"
+  },
+  { 
+    name: "Gaming Monitor", 
+    price: 4599, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcYn5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", 
+    dept: "gaming",
+    description: "27-inch gaming monitor with 165Hz refresh rate, 1ms response time, and FreeSync Premium. Immersive gaming experience.",
+    features: ["165Hz refresh rate", "1ms response", "FreeSync Premium", "HDR support", "Ergonomic stand"],
+    sku: "MON-GAME-165HZ"
+  },
+  { 
+    name: "RGB Keyboard", 
+    price: 1599, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcZo4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", 
+    dept: "gaming",
+    description: "Mechanical RGB keyboard with customizable lighting effects, dedicated media keys, and durable construction.",
+    features: ["Customizable RGB", "Mechanical switches", "Dedicated media keys", "Anti-ghosting", "Braided cable"],
+    sku: "KB-RGB-MECH"
+  },
+  { 
+    name: "Gaming Desk", 
+    price: 3299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcAp3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", 
+    dept: "gaming",
+    description: "Spacious gaming desk with cable management, cup holder, and headphone hook. Ergonomic design for long gaming sessions.",
+    features: ["Spacious desktop", "Cable management", "Cup holder", "Headphone hook", "Sturdy construction"],
+    sku: "DESK-GAME-ERG"
+  },
+  { 
+    name: "Controller Charger", 
+    price: 399, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcBq2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", 
+    dept: "gaming",
+    description: "Dual controller charging station with LED indicators and protective design. Charges controllers safely and efficiently.",
+    features: ["Dual charging", "LED indicators", "Protective design", "Fast charging", "Compact base"],
+    sku: "CHGR-CTRL-DUAL"
+  },
+  { 
+    name: "Refrigerator", 
+    price: 7999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcCr1n2o3p4q5r6s7t8u9v0w1x2y3z4a5b6c7d&s", 
+    dept: "home",
+    description: "350-liter frost-free refrigerator with inverter technology, multiple compartments, and LED lighting. Energy efficient.",
+    features: ["350-liter capacity", "Frost-free", "Inverter technology", "Multiple compartments", "Energy efficient"],
+    sku: "FRIDGE-350L"
+  },
+  { 
+    name: "Washing Machine", 
+    price: 6999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcDs0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c6d&s", 
+    dept: "home",
+    description: "8kg front-load washing machine with multiple wash programs, quick wash, and inverter motor for quiet operation.",
+    features: ["8kg capacity", "Front load", "Multiple programs", "Quick wash", "Inverter motor"],
+    sku: "WASH-8KG-FRONT"
+  },
+  { 
+    name: "Dishwasher", 
+    price: 5499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcEt9n0o1p2q3r4s5t6u7v8w9x0y1z2a3b4c5d&s", 
+    dept: "home",
+    description: "12-place setting dishwasher with multiple wash cycles, energy saving mode, and delay start function.",
+    features: ["12-place setting", "Multiple cycles", "Energy saving", "Delay start", "Quiet operation"],
+    sku: "DISH-12PLACE"
+  },
+  { 
+    name: "Air Purifier", 
+    price: 1999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcFu8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", 
+    dept: "home",
+    description: "HEPA air purifier with 3-stage filtration, air quality sensor, and quiet sleep mode. Cleans rooms up to 40m².",
+    features: ["HEPA filtration", "3-stage system", "Air quality sensor", "Sleep mode", "40m² coverage"],
+    sku: "PURIFIER-HEPA"
+  },
+  { 
+    name: "Humidifier", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcGv7n8o9p0q1r2s3t4u5v6w7x8y9z0a1b2c3d&s", 
+    dept: "home",
+    description: "Ultrasonic humidifier with adjustable mist, night light, and auto shut-off. Relieves dry air in bedrooms and offices.",
+    features: ["Ultrasonic", "Adjustable mist", "Night light", "Auto shut-off", "Large water tank"],
+    sku: "HUMID-ULTRA-001"
+  },
+  { 
+    name: "File Cabinet", 
+    price: 1299, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcHw6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d&s", 
+    dept: "office",
+    description: "2-drawer filing cabinet with locking mechanism, smooth gliding drawers, and durable steel construction.",
+    features: ["2 drawers", "Locking mechanism", "Smooth gliding", "Steel construction", "Letter/legal size"],
+    sku: "CAB-FILE-2DR"
+  },
+  { 
+    name: "Conference Phone", 
+    price: 1799, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcIx5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", 
+    dept: "office",
+    description: "Professional conference phone with 360° microphone coverage, Bluetooth connectivity, and noise cancellation.",
+    features: ["360° coverage", "Bluetooth", "Noise cancellation", "Speakerphone", "Easy setup"],
+    sku: "PHONE-CONF-360"
+  },
+  { 
+    name: "Document Scanner", 
+    price: 1499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcJy4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", 
+    dept: "office",
+    description: "High-speed document scanner with automatic document feeder, duplex scanning, and OCR software.",
+    features: ["High-speed scanning", "ADF 50 sheets", "Duplex scanning", "OCR software", "Compact design"],
+    sku: "SCAN-DOC-ADF"
+  },
+  { 
+    name: "Label Maker", 
+    price: 499, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcKz3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", 
+    dept: "office",
+    description: "Portable label maker with QWERTY keyboard, multiple fonts, and various tape options. Battery powered.",
+    features: ["QWERTY keyboard", "Multiple fonts", "Various tapes", "Battery powered", "LCD display"],
+    sku: "LABEL-MAKER-001"
+  },
+  { 
+    name: "Stapler Set", 
+    price: 199, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcL2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", 
+    dept: "office",
+    description: "Premium stapler set including stapler, staple remover, and box of staples. Durable metal construction.",
+    features: ["Metal construction", "Staple remover included", "Box of staples", "Anti-jam mechanism", "Comfort grip"],
+    sku: "STAPLER-SET-MET"
+  },
+  { 
+    name: "Air Purifier", 
+    price: 1999, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcFu8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", 
+    dept: "home",
+    description: "Advanced air purifier with HEPA and carbon filters, smart sensors, and quiet operation for bedrooms.",
+    features: ["HEPA + Carbon filters", "Smart sensors", "Quiet operation", "Auto mode", "Child lock"],
+    sku: "AIR-PUR-SMART"
+  },
+  { 
+    name: "Electric Screwdriver", 
+    price: 899, 
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQi0YSHs1AoebCYAArQ9ObZ0feEHwdryzmyQ&s", 
+    dept: "home",
+    description: "Professional electric screwdriver with torque control, LED work light, and 30-piece bit set for versatile use.",
+    features: ["Torque control", "LED work light", "30-piece bit set", "Rechargeable", "Comfort grip"],
+    sku: "SCREWDRV-ELEC-PRO"
+  }
+];
 
   // DOM elements
   const productGrid = document.getElementById('productGrid');
@@ -607,35 +1651,49 @@
     console.log(`Total pages: ${totalPages}`);
   }
 
-  // Render products
-  function renderProducts(products) {
-    productGrid.innerHTML = '';
-    
-    if (products.length === 0) {
-      productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">No products found in this category.</p>';
-      return;
-    }
-
-    products.forEach((product, index) => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.dataset.index = index;
-
-      card.innerHTML = `
-      
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <div class="product-name">${product.name}</div>
-        <div class="product-price">R${product.price.toFixed(2)}</div>
-        <button class="add-cart" onclick="addToCart('${product.name}', ${product.price})">
-          🛒 Add to Cart
-        </button>
-      `;
-
-      productGrid.appendChild(card);
-    });
-    
-    console.log(`Rendered ${products.length} products`);
+// Render products
+function renderProducts(products) {
+  productGrid.innerHTML = '';
+  
+  if (products.length === 0) {
+    productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">No products found in this category.</p>';
+    return;
   }
+
+  products.forEach((product, index) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.index = index;
+    
+    // Create a short description for the card
+    const shortDescription = product.description 
+      ? product.description.substring(0, 80) + '...'
+      : 'High-quality product with excellent features. Click for more details.';
+
+    card.innerHTML = `
+      <button class="quick-view-btn" onclick="event.stopPropagation(); openProductModal(${index})">Quick View</button>
+      <img src="${product.image}" alt="${product.name}" loading="lazy" onclick="openProductModal(${index})">
+      <div class="product-name" onclick="openProductModal(${index})">${product.name}</div>
+      <div class="product-description-short" onclick="openProductModal(${index})">${shortDescription}</div>
+      <div class="product-price">R${product.price.toFixed(2)}</div>
+      <button class="add-cart" onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price})">
+        🛒 Add to Cart
+      </button>
+    `;
+
+    // Make the whole card clickable (except buttons)
+    card.addEventListener('click', (e) => {
+      // Only open modal if the click wasn't on a button
+      if (!e.target.closest('button')) {
+        openProductModal(index);
+      }
+    });
+
+    productGrid.appendChild(card);
+  });
+  
+  console.log(`Rendered ${products.length} products`);
+}
 
   // Show specific page
   function showPage(page, filteredProducts = productsData) {
@@ -658,13 +1716,26 @@
   }
 
   // Cart functions
-  function addToCart(productName, price) {
-    cartCount++;
-    document.getElementById('cartItems').textContent = cartCount;
+function addToCart(productName, price) {
+  cartCount++;
+  document.getElementById('cartItems').textContent = cartCount;
+  
+  // Update cart button in modal if it exists
+  const cartBtn = document.querySelector('.add-to-cart-modal');
+  if (cartBtn) {
+    cartBtn.innerHTML = '🛒 Added to Cart';
+    cartBtn.style.background = '#10b981';
     
-    // Show notification
-    showNotification(`Added ${productName} to cart!`);
+    // Reset after 2 seconds
+    setTimeout(() => {
+      cartBtn.innerHTML = '🛒 Add to Cart';
+      cartBtn.style.background = '#2563eb';
+    }, 2000);
   }
+  
+  // Show notification
+  showNotification(`Added ${productName} to cart!`);
+}
 
   function toggleWishlist(btn) {
     btn.classList.toggle('active');
@@ -755,6 +1826,131 @@ function showpage(pageName) {
   }
 }
   
+// Modal functions - UPDATED
+function openProductModal(productIndex) {
+  const modal = document.getElementById('productModal');
+  const modalBody = document.getElementById('modalBody');
+  const filteredProducts = getFilteredProducts();
+  
+  // Get the correct product based on filtered view
+  const product = filteredProducts[productIndex];
+  
+  if (!product) {
+    console.error('Product not found at index:', productIndex);
+    return;
+  }
+  
+  // Determine department display name
+  const deptNames = {
+    'electronics': 'Electronics',
+    'gaming': 'Gaming',
+    'home': 'Home Appliances',
+    'office': 'Office Supplies'
+  };
+  
+  // Create features HTML string
+  const featuresList = product.features || [
+    'High-quality materials',
+    'Reliable performance',
+    'Easy to use',
+    'Warranty included',
+    'Excellent value for money'
+  ];
+  
+  const featuresHTML = featuresList.map(feature => `<li>${feature}</li>`).join('');
+  
+  // Populate modal content
+  modalBody.innerHTML = `
+    <div class="modal-image-container">
+      <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+    </div>
+    <div class="modal-details">
+      <span class="product-category">${deptNames[product.dept] || product.dept}</span>
+      <h1 class="modal-product-name">${product.name}</h1>
+      <div class="modal-price">R${product.price.toFixed(2)}</div>
+      
+      <div class="product-description">
+        <h3>Description</h3>
+        <p>${product.description || 'Premium quality product with excellent features and reliable performance. Designed for durability and user satisfaction.'}</p>
+      </div>
+      
+      <div class="product-features">
+        <h3>Key Features</h3>
+        <ul>
+          ${featuresHTML}
+        </ul>
+      </div>
+      
+      <div class="product-specs">
+        <h3>Product Details</h3>
+        <p><strong>SKU:</strong> ${product.sku || `WBH-${product.dept.toUpperCase()}-${String(productIndex + 1).padStart(3, '0')}`}</p>
+        <p><strong>Category:</strong> ${deptNames[product.dept] || product.dept}</p>
+        <p><strong>Availability:</strong> <span style="color: #10b981;">In Stock</span></p>
+        <p><strong>Delivery:</strong> 5-7 working days nationwide</p>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="add-to-cart-modal" onclick="addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price}); showNotification('Added ${product.name.replace(/'/g, "\\'")} to cart!')">
+          🛒 Add to Cart
+        </button>
+        <button class="add-to-wishlist-modal" onclick="addToWishlist('${product.name.replace(/'/g, "\\'")}'); showNotification('Added ${product.name.replace(/'/g, "\\'")} to wishlist!')">
+          ❤️ Add to Wishlist
+        </button>
+      </div>
+    </div>
+  `;
+  
+  // Show modal
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+  
+  // Add click event to close modal when clicking outside
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  // Add ESC key support
+  document.addEventListener('keydown', handleEscKey);
+}
+
+function closeModal() {
+  const modal = document.getElementById('productModal');
+  modal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+  
+  // Remove ESC key event listener
+  document.removeEventListener('keydown', handleEscKey);
+}
+
+function handleEscKey(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+}
+
+// Add to wishlist function
+function addToWishlist(productName) {
+  wishlistCount++;
+  document.getElementById('wishlistCount').textContent = wishlistCount;
+  
+  // Update wishlist button in modal if it exists
+  const wishlistBtn = document.querySelector('.add-to-wishlist-modal');
+  if (wishlistBtn) {
+    wishlistBtn.innerHTML = '❤️ Added to Wishlist';
+    wishlistBtn.style.background = '#fecdd3';
+    wishlistBtn.style.borderColor = '#f43f5e';
+    
+    // Reset after 2 seconds
+    setTimeout(() => {
+      wishlistBtn.innerHTML = '❤️ Add to Wishlist';
+      wishlistBtn.style.background = '#f1f5f9';
+      wishlistBtn.style.borderColor = '#e5e7eb';
+    }, 2000);
+  }
+}
+
 </script>
 </body>
 </html>

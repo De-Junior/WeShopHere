@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Returns & Refunds Policy - WeShopOnline</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    header {
+      background: #1f2937;
+      color: #fff;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 14px 24px;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 28px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+    }
+
+    .address {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .account {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .account span, .account a {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .account a:hover {
+      text-decoration: underline;
+    }
+
+    /* Navigation */
+    nav {
+      background: #fff;
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .badge {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      color: #1f2937;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav-action:hover {
+      background: #e2e8f0;
+    }
+
+    .nav-action .count {
+      background: #2563eb;
+      color: white;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .wishlist-btn .count {
+      background: #f43f5e;
+    }
+
+    /* Policy Content */
+    .policy-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .policy-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .policy-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .last-updated {
+      color: #6b7280;
+      font-size: 14px;
+      background: #f3f4f6;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .policy-section {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .policy-section h2 {
+      color: #2563eb;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .policy-section h3 {
+      color: #374151;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px;
+    }
+
+    .policy-section p {
+      margin-bottom: 16px;
+      color: #4b5563;
+    }
+
+    .policy-section ul {
+      margin: 16px 0 24px 24px;
+    }
+
+    .policy-section li {
+      margin-bottom: 10px;
+      color: #4b5563;
+    }
+
+    .highlight-box {
+      background: #f0f9ff;
+      border-left: 4px solid #38bdf8;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .warning-box {
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .info-box {
+      background: #f0fdf4;
+      border-left: 4px solid #10b981;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    th {
+      background: #2563eb;
+      color: white;
+      padding: 16px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      color: #4b5563;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    .back-to-home {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .back-to-home:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: #1f2937;
+      color: #cbd5f5;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 30px 16px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-content h4 {
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .footer-link {
+      display: block;
+      color: #cbd5f5;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .copyright {
+      border-top: 1px solid #334155;
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 12px;
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .contact-item {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 8px;
+      min-width: 200px;
+    }
+
+    .contact-item h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #e5e7eb;
+    }
+
+    .contact-item p {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="top-bar">
+    <div class="logo"><a href="index.html">WeShopOnline</a></div>
+    <div class="address">Customer Support: 0800 123 456</div>
+    <div class="search">
+      <input type="text" placeholder="Search policies and support">
+    </div>
+    <div class="account">
+      <span>Need Help?</span>
+      <span>|</span>
+      <a href="signin.html">Sign In</a>
+      <span>/</span>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-left">
+    <div class="badge">7 WORKING DAYS DELIVERY</div>
+    <div class="badge">FREE RETURNS WITHIN 30 DAYS</div>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-action" onclick="window.location.href='wishlist.html'">
+      ❤️ <span>Wishlist</span>
+    </button>
+    <button class="nav-action" onclick="window.location.href='cart.html'">
+      🛒 <span>Cart</span>
+    </button>
+  </div>
+</nav>
+
+<main class="policy-container">
+  <div class="policy-header">
+    <h1>Returns & Refunds Policy</h1>
+    <div class="last-updated">Last Updated: January 2025</div>
+  </div>
+
+  <section class="policy-section">
+    <h2>📦 Our Returns Promise</h2>
+    <p>At WeShopOnline, we want you to be completely satisfied with your purchase. If you're not happy with your item, we offer easy returns and exchanges within 30 days of delivery.</p>
+    
+    <div class="highlight-box">
+      <p><strong>🌟 Key Benefits:</strong></p>
+      <ul>
+        <li>30-day return window for most items</li>
+        <li>Free returns on defective or incorrect items</li>
+        <li>Refunds processed within 5-10 business days</li>
+        <li>Multiple return drop-off locations nationwide</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="policy-section">
+    <h2>⏰ Return Timeframes</h2>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Type</th>
+            <th>Return Window</th>
+            <th>Condition Required</th>
+            <th>Return Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Electronics & Appliances</td>
+            <td>30 days</td>
+            <td>Unopened / Unused</td>
+            <td>Pickup or Drop-off</td>
+          </tr>
+          <tr>
+            <td>Fashion & Clothing</td>
+            <td>30 days</td>
+            <td>Unworn with tags</td>
+            <td>Drop-off</td>
+          </tr>
+          <tr>
+            <td>Gaming & Software</td>
+            <td>14 days (if sealed)</td>
+            <td>Factory sealed</td>
+            <td>Drop-off only</td>
+          </tr>
+          <tr>
+            <td>Home & Kitchen</td>
+            <td>30 days</td>
+            <td>Unused in original packaging</td>
+            <td>Pickup</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="policy-section">
+    <h2>✅ Eligible for Return</h2>
+    <p>Items can be returned for the following reasons:</p>
+    <ul>
+      <li>Product is defective or damaged upon arrival</li>
+      <li>Wrong item was delivered</li>
+      <li>Item doesn't match the description</li>
+      <li>You've changed your mind (some conditions apply)</li>
+      <li>Missing parts or accessories</li>
+    </ul>
+
+    <div class="info-box">
+      <p><strong>💡 Tip:</strong> Keep the original packaging, manuals, and all accessories until you're sure you want to keep the item.</p>
+    </div>
+  </section>
+
+  <section class="policy-section">
+    <h2>❌ Not Eligible for Return</h2>
+    <p>The following items cannot be returned:</p>
+    <ul>
+      <li>Personalized or custom-made products</li>
+      <li>Software, games, or DVDs with broken seals</li>
+      <li>Gift cards and downloadable software</li>
+      <li>Perishable goods</li>
+      <li>Items damaged by misuse or improper handling</li>
+      <li>Products without original packaging or tags</li>
+    </ul>
+
+    <div class="warning-box">
+      <p><strong>⚠️ Important:</strong> For health and safety reasons, certain personal care items and underwear cannot be returned unless defective.</p>
+    </div>
+  </section>
+
+  <section class="policy-section">
+    <h2>💳 Refund Process</h2>
+    <h3>How Refunds Work</h3>
+    <ol>
+      <li><strong>Initiate Return:</strong> Log into your account and go to "Order History"</li>
+      <li><strong>Print Label:</strong> Generate and print your return label</li>
+      <li><strong>Pack Item:</strong> Include all original items, packaging, and accessories</li>
+      <li><strong>Drop-off:</strong> Take to your nearest drop-off point</li>
+      <li><strong>Processing:</strong> We inspect the returned item (3-5 business days)</li>
+      <li><strong>Refund Issued:</strong> Refund processed to your original payment method</li>
+    </ol>
+
+    <h3>Refund Timelines</h3>
+    <ul>
+      <li><strong>Credit/Debit Cards:</strong> 5-10 business days after we receive your return</li>
+      <li><strong>Bank Transfer:</strong> 3-5 business days</li>
+      <li><strong>Store Credit:</strong> Instant upon return approval</li>
+      <li><strong>Cash on Delivery:</strong> Bank transfer within 7-14 business days</li>
+    </ul>
+  </section>
+
+  <section class="policy-section">
+    <h2>🔄 Exchange Process</h2>
+    <p>Prefer to exchange rather than return? Here's how:</p>
+    <ol>
+      <li>Contact our support team within 30 days of delivery</li>
+      <li>Specify the item you want to exchange for</li>
+      <li>We'll check stock availability</li>
+      <li>If available, we'll arrange pickup and delivery of the new item</li>
+      <li>Any price differences will be charged or refunded accordingly</li>
+    </ol>
+    
+    <div class="highlight-box">
+      <p><strong>🎁 Free Exchange:</strong> We offer free exchanges for defective items or if we sent the wrong product.</p>
+    </div>
+  </section>
+
+  <section class="policy-section">
+    <h2>📞 Need Help With Your Return?</h2>
+    <p>Our customer support team is here to help with any return-related questions.</p>
+    
+    <div class="contact-section">
+      <h2>Contact Our Support Team</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <h4>📞 Phone Support</h4>
+          <p>0800 123 456</p>
+          <p>Mon-Fri: 8am-8pm | Sat: 9am-5pm</p>
+        </div>
+        <div class="contact-item">
+          <h4>✉️ Email Support</h4>
+          <p>returns@weshoponline.co.za</p>
+          <p>Response within 24 hours</p>
+        </div>
+        <div class="contact-item">
+          <h4>💬 Live Chat</h4>
+          <p>Available on website</p>
+          <p>Mon-Fri: 9am-6pm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-to-home">← Back to Shopping</a>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div>
+      <h4>Company</h4>
+      <a class="footer-link" href="about.html">About Us</a>
+      <a class="footer-link" href="terms.html">Terms & Conditions</a>
+      <a class="footer-link" href="privacy.html">Privacy Policy</a>
+      <a class="footer-link" href="cookies.html">Cookie Policy</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a class="footer-link" href="help.html">Help Center</a>
+      <a class="footer-link" href="contact.html">Contact Us</a>
+      <a class="footer-link" href="shipping.html">Shipping Policy</a>
+      <a class="footer-link" href="returns.html">Returns & Refunds</a>
+    </div>
+    <div>
+      <h4>Account</h4>
+      <a class="footer-link" href="signin.html">My Account</a>
+      <a class="footer-link" href="#">Order History</a>
+      <a class="footer-link" href="wishlist.html">Wishlist</a>
+      <a class="footer-link" href="#">Newsletter</a>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a class="footer-link" href="index.html">Shop All Products</a>
+      <a class="footer-link" href="cart.html">View Cart</a>
+      <a class="footer-link" href="wishlist.html">My Wishlist</a>
+      <a class="footer-link" href="#">Track Order</a>
+    </div>
+  </div>
+
+  <div class="copyright">
+    © 2025 All rights reserved. WeShopOnline Holdings (Pty) Ltd. Reg No: 2025/123456/07
+  </div>
+</footer>
+
+<script>
+  // Simple functions for navigation
+  function redirectToHome() {
+    window.location.href = 'index.html';
+  }
+
+  function redirectToCart() {
+    window.location.href = 'cart.html';
+  }
+
+  function redirectToWishlist() {
+    window.location.href = 'wishlist.html';
+  }
+
+  // Update last updated date
+  document.addEventListener('DOMContentLoaded', function() {
+    const months = ["January", "February", "March", "April", "May", "June", 
+                   "July", "August", "September", "October", "November", "December"];
+    const currentDate = new Date();
+    const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+    
+    // Update the last updated text
+    const lastUpdatedElement = document.querySelector('.last-updated');
+    if (lastUpdatedElement) {
+      lastUpdatedElement.textContent = `Last Updated: ${month} ${year}`;
+    }
+  });
+</script>
+
+</body>
+</html>
