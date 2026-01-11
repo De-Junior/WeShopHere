@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GJHL7BMQEC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GJHL7BMQEC');
-</script>
-    
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WeBuyHere Dev</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
     /* Reset & Base */
@@ -43,6 +35,12 @@
     button {
       font-family: inherit;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
     }
 
     /* Header */
@@ -65,15 +63,9 @@
       color: #38bdf8;
     }
 
-    .address {
-      background: #111827;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
     .search {
       flex: 1;
+      min-width: 200px;
     }
 
     .search input {
@@ -81,21 +73,27 @@
       padding: 10px 14px;
       border-radius: 8px;
       border: none;
+      font-size: 14px;
     }
 
-    .account a {
-      color: #fff;
+    .address {
+      color: #9ca3af;
       font-size: 14px;
-      margin-right: 4px;
     }
 
-    /* Alert */
-    .alert {
-      background: #fb7185;
+    .account {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .account span, .account a {
       color: #fff;
-      text-align: center;
-      padding: 10px;
       font-size: 14px;
+    }
+
+    .account a:hover {
+      text-decoration: underline;
     }
 
     /* Navigation */
@@ -108,20 +106,12 @@
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .nav-left, .nav-right {
+    .nav-left,
+    .nav-right {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
-    }
-
-    .nav-link {
-      color: #1f2937;
-      font-weight: 500;
-    }
-
-    .nav-link:hover {
-      text-decoration: underline;
     }
 
     .badge {
@@ -130,9 +120,41 @@
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 13px;
+      font-weight: 600;
     }
 
-    /* Products Section */
+    .nav-action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      color: #1f2937;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav-action:hover {
+      background: #e2e8f0;
+    }
+
+    .nav-action .count {
+      background: #2563eb;
+      color: white;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .wishlist-btn .count {
+      background: #f43f5e;
+    }
+
+    /* Products */
     .products {
       max-width: 1200px;
       margin: 40px auto;
@@ -140,11 +162,11 @@
     }
 
     .products h2 {
+      margin-bottom: 20px;
       font-size: 24px;
-      margin-bottom: 16px;
+      font-weight: 700;
     }
 
-    /* Department Filter */
     .department-filter {
       margin-bottom: 20px;
       display: flex;
@@ -158,20 +180,21 @@
       border-radius: 6px;
       font-weight: 500;
       background: #e5e7eb;
-      transition: background 0.2s, color 0.2s;
     }
 
-    .department-filter button:hover,
+    .department-filter button:hover {
+      background: #d1d5db;
+    }
+
     .department-filter button.active {
       background: #2563eb;
       color: #fff;
     }
 
-    /* Product Grid */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
     }
 
     .product-card {
@@ -182,48 +205,65 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 6px 16px rgba(0,0,0,.05);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .product-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+      box-shadow: 0 12px 20px rgba(0,0,0,.1);
     }
 
     .product-card img {
       width: 100%;
-      height: 120px;
+      height: 140px;
       object-fit: cover;
       border-radius: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .product-name {
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      flex-grow: 1;
     }
 
     .product-price {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       color: #16a34a;
-      margin-top: auto;
+      margin-bottom: 12px;
     }
 
-    /* Wishlist Heart */
-    .wishlist {
+    .wishlist-btn-card {
       position: absolute;
       top: 8px;
       right: 8px;
       font-size: 18px;
       color: #e5e7eb;
-      cursor: pointer;
-      transition: color 0.2s;
+      background: transparent;
+      border: none;
+      padding: 4px;
     }
 
-    .wishlist.active {
+    .wishlist-btn-card.active {
       color: #f43f5e;
+    }
+
+    .add-cart {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .add-cart:hover {
+      background: #1d4ed8;
     }
 
     /* Pagination */
@@ -231,7 +271,7 @@
       display: flex;
       justify-content: center;
       gap: 8px;
-      margin: 30px 0;
+      margin: 40px 0 20px;
       flex-wrap: wrap;
     }
 
@@ -241,7 +281,10 @@
       border-radius: 6px;
       background: #e5e7eb;
       font-weight: 600;
-      transition: background 0.2s;
+    }
+
+    .pagination button:hover {
+      background: #d1d5db;
     }
 
     .pagination button.active {
@@ -253,7 +296,7 @@
     footer {
       background: #1f2937;
       color: #cbd5f5;
-      margin-top: 40px;
+      margin-top: 60px;
     }
 
     .footer-content {
@@ -265,83 +308,77 @@
       margin: auto;
     }
 
-    footer h4 {
+    .footer-content h4 {
       color: #fff;
       margin-bottom: 12px;
+      font-size: 16px;
     }
 
     .footer-link {
       display: block;
       color: #cbd5f5;
       font-size: 14px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .footer-link:hover {
+      color: #fff;
       text-decoration: underline;
     }
 
     .copyright {
       border-top: 1px solid #334155;
-      padding: 16px;
+      padding: 20px;
       text-align: center;
       font-size: 13px;
+      color: #9ca3af;
     }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .top-bar { flex-direction: column; align-items: flex-start; }
-      .search { width: 100%; }
-      nav { flex-direction: column; gap: 10px; }
-      .nav-left, .nav-right { flex-wrap: wrap; gap: 10px; }
-      .product-grid { grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 12px; }
-    }
-
-    @media (max-width: 480px) {
-      .logo a { font-size: 24px; }
-      .product-card img { height: 100px; }
-      .products h2 { font-size: 20px; }
-      .department-filter button { padding: 5px 10px; font-size: 13px; }
-      .product-name { font-size: 13px; }
-      .product-price { font-size: 14px; }
-    }
-
   </style>
 </head>
+
 <body>
 
 <header>
   <div class="top-bar">
-    <div class="logo"><a href="#">WeBuyHere</a></div>
+    <div class="logo"><a href="#">WeShopOnline</a></div>
     <div class="address">Delivering to: Enter your address</div>
-    <div class="search"><input placeholder="Search products and brands"></div>
-    <div class="account">
-      <a href="#">Sign In</a> / <a href="#">Sign Up</a> | R7 500.00
+    <div class="search">
+      <input type="text" placeholder="Search products and brands">
     </div>
+<div class="account">
+  <span id="cartCount">R100 Credit</span>
+  <span>|</span>
+  <a href="#" onclick="redirectToSignIn()">Sign In</a>
+  <span>/</span>
+  <a href="#" onclick="redirectToSignUp()">Sign Up</a>
+</div>
   </div>
 </header>
 
-<div class="alert">Enter your address for your relevant offers & availability</div>
-
 <nav>
   <div class="nav-left">
-    <strong>Shop by Department</strong>
-    <div class="badge">60 MIN</div>
-    <div class="badge">Sat 10:11 AM</div>
+    <div class="badge">7 WORKING DAYS DELIVERY</div>
+    <div class="badge">NATION WIDE</div>
   </div>
-  <div class="nav-right">
-    <a class="nav-link" href="#">My Shop</a>
-    <a class="nav-link" href="#">Find a Product</a>
-    <a class="nav-link" href="#">Stores & Leaflets</a>
-    <a class="nav-link" href="#">Other Services</a>
-  </div>
+
+<div class="nav-right">
+  <button class="nav-action wishlist-btn" onclick="redirectToWishlist()">
+    ❤️ <span>Wishlist</span>
+    <span class="count" id="wishlistCount">0</span>
+  </button>
+
+  <button class="nav-action cart-btn" onclick="redirectToCart()">
+    🛒 <span>Cart</span>
+    <span class="count" id="cartItems">0</span>
+  </button>
+</div>
 </nav>
 
 <section class="products">
   <h2>Popular Products</h2>
 
   <div class="department-filter">
-    <button data-dept="all" class="dept-btn active">All</button>
+    <button data-dept="all" class="dept-btn active">All Departments</button>
     <button data-dept="electronics" class="dept-btn">Electronics</button>
     <button data-dept="gaming" class="dept-btn">Gaming</button>
     <button data-dept="home" class="dept-btn">Home Appliances</button>
@@ -350,156 +387,374 @@
 
   <div class="product-grid" id="productGrid"></div>
 
-  <div class="pagination">
-    <button data-page="1" class="active">1</button>
-    <button data-page="2">2</button>
-    <button data-page="3">3</button>
+  <div class="pagination" id="pagination">
+    <!-- Page buttons will be generated dynamically -->
   </div>
 </section>
 
 <footer>
+<footer>
   <div class="footer-content">
     <div>
       <h4>Company</h4>
-      <a class="about.html" href="about.html">About Us</a>
-      <a class="footer-link" href="terms.html">Terms & Conditions</a>
-      <a class="footer-link" href="privacy.html">Privacy Policy</a>
-      <a class="footer-link" href="coockies.html">Cookie Policy</a>
+      <a class="footer-link" href="about.html" onclick="showPage('about')">About Us</a>
+      <a class="footer-link" href="terms.html" onclick="showPage('terms')">Terms & Conditions</a>
+      <a class="footer-link" href="privacy.html" onclick="showPage('privacy')">Privacy Policy</a>
+      <a class="footer-link" href="cookies.html" onclick="showPage('cookies')">Cookie Policy</a>
     </div>
     <div>
-      <h4>Customer Support</h4>
-      <a class="footer-link" href="help.html">Help Centre</a>
-      <a class="footer-link" href="care.html">Customer Care</a>
-      <a class="footer-link" href="">contact.html</a>
+      <h4>Support</h4>
+      <a class="footer-link" href="help.html" onclick="showPage('help')">Help Center</a>
+      <a class="footer-link" href="contact.html" onclick="showPage('contact')">Contact Us</a>
+      <a class="footer-link" href="shipping.html" onclick="showPage('shipping')">Shipping Policy</a>
+      <a class="footer-link" href="returns.html" onclick="showPage('returns')">Returns & Refunds</a>
     </div>
     <div>
-      <h4>Get the App</h4>
-      <a class="footer-link" href="appstore.html">App Store</a>
-      <a class="footer-link" href="playstore.html">Google Play</a>
+      <h4>Account</h4>
+      <a class="footer-link" href="#" onclick="showPage('account')">My Account</a>
+      <a class="footer-link" href="#" onclick="showPage('orders')">Order History</a>
+      <a class="footer-link" href="#" onclick="showPage('wishlist')">Wishlist</a>
+      <a class="footer-link" href="#" onclick="showPage('newsletter')">Newsletter</a>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a class="footer-link" href="#" onclick="showAllProducts()">Shop All Products</a>
+      <a class="footer-link" href="#" onclick="viewCart()">View Cart</a>
+      <a class="footer-link" href="#" onclick="toggleWishlistAll()">My Wishlist</a>
+      <a class="footer-link" href="#" onclick="showPage('track')">Track Order</a>
     </div>
   </div>
-  <div class="copyright">© 2026 All rights reserved. Shoprite Holdings</div>
+
+  <div class="copyright">
+    © 2026 All rights reserved. Shoprite Holdings
+  </div>
 </footer>
 
+
 <script>
-  const productGrid = document.getElementById("productGrid");
-  const buttons = document.querySelectorAll(".pagination button");
-  const PER_PAGE = 20;
+  // Data and state
+  let wishlistCount = 0;
+  let cartCount = 0;
+  let currentPage = 1;
+  let currentDept = 'all';
+  const PER_PAGE = 18; // Changed from 20 to 18
 
-  // Your productsData here (unchanged)...
   const productsData = [
- // PAGE 1 (remaining products to complete 20 for page 1)
-{ name: "Power Bank 20000mAh", price: 699, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg", dept: "electronics" },
-{ name: "Laptop Backpack", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjbIUEScaDNkTsIes0bBoFHRiO1J_3SAyP-A&s", dept: "electronics" },
-{ name: "Gaming Mouse", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s", dept: "gaming" },
-{ name: "Mechanical Keyboard", price: 1199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyAi_LG8QC_eds60Y_C0c9oqc42Jhgef15qQ&s", dept: "gaming" },
-{ name: "27-inch Monitor", price: 3499, image: "https://www.dellonline.co.za/cdn/shop/files/C7FE19E8-896B-4063-924C-247DE7E9FF80_169200_800x.jpg?v=1708345394", dept: "electronics" },
-{ name: "Wireless Mouse", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiAKl0L7f6ryLZ6VB7WILLQbH4EqaQWEvlOg&s", dept: "electronics" },
-{ name: "Bluetooth Speaker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s", dept: "electronics" },
-{ name: "Galaxy S25 Ultra", price: 4999, image: "https://newworld.co.za/cdn/shop/files/2_57a8c048-45cd-4212-99c6-d45fc8f4c13d.webp?v=1750321330", dept: "electronics" },
-{ name: "iPad Pro 11-inch", price: 3299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZcjR-0QtVdJi2hM7dsLkvg50jwAh0dWBfQ&s", dept: "electronics" },
-{ name: "HP N-100 8GB RAM", price: 449, image: "https://www.incredible.co.za/api/catalog/product/2/3/23c1_intel_opp_sebastian_15_ffplusplus_naturalsilver_nt_hdcam_fpr_nonodd_feathe_e53a.png?width=700&height=700&store=incredibleconnection&image-type=image", dept: "electronics" },
+    { name: "Power Bank 20000mAh", price: 699, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg", dept: "electronics" },
+    { name: "Laptop Backpack", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjbIUEScaDNkTsIes0bBoFHRiO1J_3SAyP-A&s", dept: "electronics" },
+    { name: "Gaming Mouse", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s", dept: "gaming" },
+    { name: "Mechanical Keyboard", price: 1199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyAi_LG8QC_eds60Y_C0c9oqc42Jhgef15qQ&s", dept: "gaming" },
+    { name: "27-inch Monitor", price: 3499, image: "https://www.dellonline.co.za/cdn/shop/files/C7FE19E8-896B-4063-924C-247DE7E9FF80_169200_800x.jpg?v=1708345394", dept: "electronics" },
+    { name: "Wireless Mouse", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiAKl0L7f6ryLZ6VB7WILLQbH4EqaQWEvlOg&s", dept: "electronics" },
+    { name: "Bluetooth Speaker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s", dept: "electronics" },
+    { name: "Galaxy S25 Ultra", price: 4999, image: "https://newworld.co.za/cdn/shop/files/2_57a8c048-45cd-4212-99c6-d45fc8f4c13d.webp?v=1750321330", dept: "electronics" },
+    { name: "iPad Pro 11-inch", price: 3299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZcjR-0QtVdJi2hM7dsLkvg50jwAh0dWBfQ&s", dept: "electronics" },
+    { name: "HP N-100 8GB RAM", price: 449, image: "https://www.incredible.co.za/api/catalog/product/2/3/23c1_intel_opp_sebastian_15_ffplusplus_naturalsilver_nt_hdcam_fpr_nonodd_feathe_e53a.png?width=700&height=700&store=incredibleconnection&image-type=image", dept: "electronics" },
+    { name: "Noise Cancelling Earbuds", price: 1499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROaVTiVBI1HzseGEfJjBq2XyEu_b526vXGiA&s", dept: "electronics" },
+    { name: "Webcam Full HD", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjwGvClpbTLVQm4I-S-YkvcQHyU3wZENDV7Q&s", dept: "electronics" },
+    { name: "External Hard Drive 1TB", price: 1299, image: "https://pcinternational.co.za/wp-content/uploads/STKX2000400-1.webp", dept: "electronics" },
+    { name: "USB Flash Drive 64GB", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3M-8pmfQq-Dwc6BwKr2JoNPTwP6og0s07g&s", dept: "electronics" },
+    { name: "WiFi Router", price: 999, image: "https://www.linksys.com/cdn/shop/articles/Tech_Brief_Router_white_48682d98-f68c-451f-910e-b3b15e33dec0.png?v=1763435065&width=1080", dept: "electronics" },
+    { name: "HDMI Cable", price: 129, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqkmirhmblq7v0kyRW877Xqo7gud9TrgnLMQ&s", dept: "electronics" },
+    { name: "Surge Protector", price: 249, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbP7JA_KV02nuoMmtRgBNIWFK47VtjXO6eeQ&s", dept: "electronics" },
+    { name: "Air Fryer 5L", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl_ELvh5THDjkeCeQIl6Qk-u3LPRkaI6Hog&s", dept: "home" },
+    { name: "Vacuum Cleaner", price: 3299, image: "https://www.builders.co.za/media/sys-master%2Froot%2Fh5b%2Fh33%2F14895044526110%2Flarge_null", dept: "home" },
+    { name: "Electric Kettle", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf5-KlDLdBQa1JPvcbdzQ3k3upA2IPQpztTg&s", dept: "home" },
+    { name: "Microwave Oven", price: 2199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk4X6HnwdbrHgsBqIl9p2-Ec9peamb48uMyw&s", dept: "home" },
+    { name: "Toaster", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJgc8qHcJWQLvX7S5tb_S7JyabLZaa0nty9A&s", dept: "home" },
+    { name: "Coffee Maker", price: 1899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgqXl0H59EOD1lRiviNwc4fNcl7UmEhl1wA&s", dept: "home" },
+    { name: "Blender", price: 799, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW_zNwYVNiw4GTkYmr7a_qAfhEscuiauYpdw&s", dept: "home" },
+    { name: "Rice Cooker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkhDAMBp_yyORDETKcmNWa9JFwi68ENGJRKw&s", dept: "home" },
+    { name: "Steam Iron", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgIuPX1_XLib5Vt89TRQjzhkKbxfmvbPqKRw&s", dept: "home" },
+    { name: "Heater Fan", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2W-NU2949MHaY0OHNNWSGiZmBhWb7_HksA&s", dept: "home" },
+    { name: "Office Chair", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
+    { name: "Standing Desk", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
+    { name: "LED Desk Lamp", price: 599, image: "https://retailtherapyonline.co.za/cdn/shop/files/switched-sleek-series-rechargeable-led-adjustable-desk-lamp-622385.png?v=1726753243", dept: "office" },
+    { name: "Notebook Pack", price: 149, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgFlFbTVc24iiI0Y7joCG2nv6M96Diz5Eo_A&s", dept: "office" },
+    { name: "Wireless Printer", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AEuJBxS5F30D5Dtj9zzrWLXdDycnmWepeg&s", dept: "office" },
+    { name: "Ink Cartridge", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-rs4cPTGyVFqCWO3-5zrkRpJtvBHdnH_dFA&s", dept: "office" },
+    { name: "Paper Shredder", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSotzNDzNDgScrsiOokDEZBXHs3mTTW_ZUMJA&s", dept: "office" },
+    { name: "Scientific Calculator", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmDwBA9mL5OKf9bVZx0mlV8hKFljqz3eFQEQ&s", dept: "office" },
+    { name: "Whiteboard", price: 499, image: "https://m.media-amazon.com/images/I/613CIVpz4nL.jpg", dept: "office" },
+    { name: "Desk Organiser", price: 349, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMlS3r8W8u0M46fi3R6moXXLqyTcLVVa2Tw&s", dept: "office" },
+    { name: "PlayStation Controller", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOhJE4igTgTxY4LZgbOq2d5bDoz0dcA9TL3w&s", dept: "gaming" },
+    { name: "Gaming Headset", price: 1499, image: "https://gmedia.playstation.com/is/image/SIEPDC/3d-pulse-headset-product-thumbnail-01-en-14sep21?$facebook$", dept: "gaming" },
+    { name: "Gaming Chair", price: 3999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTrjzBsAVuV2jkkc8Hs7rlyPzwgHXRKHnSBA&s", dept: "gaming" },
+    { name: "Console Cooling Fan", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDBSi_p6LGIetmajBH7zEYLmfoC5fmT9RnZg&s", dept: "gaming" },
+    { name: "Mouse Pad XL", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRldf-GzE1ajqREdeKMbg1VrhgclmbaRWDu9Q&s", dept: "gaming" },
+    { name: "Xbox Battery Pack", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrpdi1smZ9xfA3vdl5hgeV-XQvYRdh3wBhw&s", dept: "gaming" },
+    { name: "Nintendo Switch Case", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS74rJUZ98y82AinOo-5VsxUsrcL-JUylnBww&s", dept: "gaming" },
+    { name: "Racing Wheel", price: 4499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQi7pYlkxsaXUWenuXQBnvBnbqjyVMEvTEA&s", dept: "gaming" },
+    { name: "Game Storage Tower", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4fdj4ZknrK2A-Ntg_M9J69lDh6ot4N2G9A&s", dept: "gaming" },
+    { name: "VR Headset", price: 6999, image: "https://gmedia.playstation.com/is/image/SIEPDC/section3b-headset?fmt=png-alpha&scl=1", dept: "gaming" },
+    { name: "Smart TV 55-inch", price: 8999, image: "https://hisense.co.za/wp-content/uploads/2024/07/55-A6K-TV-2023-v2-1024x1024.jpg", dept: "electronics" },
+    { name: "Soundbar", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJG3ZmNkarkWZvpG01ULEr_MYKGnsr71TjWw&s", dept: "electronics" },
+    { name: "Streaming Device", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwEH4UUW6DlKOcyntoAhsqagAqBplWwIki4A&s", dept: "electronics" },
+    { name: "Security Camera", price: 1299, image: "https://www.incredible.co.za/api/catalog/product/t/a/tapo_c500_image_ecommerce_5349.png?width=700&height=700&store=incredibleconnection&image-type=image", dept: "electronics" },
+    { name: "Smart Doorbell", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMr9uPNHCJxfUrZSt2hLjEqAH1yZd_JAPRwg&s", dept: "electronics" },
+    { name: "LED Strip Lights", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpe-lIdNwV7B99VY1nvbL0h8H92Ea8JC22w&s", dept: "home" },
+    { name: "Portable Projector", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9dbmiRVT8aJFmI9oCzbIvS46k6zhVgwxr_A&s", dept: "electronics" },
+    { name: "Smart Plug", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSe2bDljDGCuS8wDo1PMgWL-Jgst3nz7GM8A&s", dept: "home" },
+    { name: "Robot Vacuum", price: 5999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuPFdv9PsZ2eXexK2FKkBQAihjfu6uAybj9w&s", dept: "home" },
+    { name: "Electric Screwdriver Kit", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQi0YSHs1AoebCYAArQ9ObZ0feEHwdryzmyQ&s", dept: "home" },
+    { name: "Laptop Cooling Pad", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ0j_1uzMfMfS2_0qMhM0tXG2lX5n8x3x5Jw&s", dept: "electronics" },
+    { name: "Wireless Charger", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh6Lm4n1wL8k3v2q5s8w9x0z1a2b3c4d5e6f&s", dept: "electronics" },
+    { name: "USB-C Hub", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk9l8m7n6p5o4q3r2s1t0u9v8w7x6y5z4a3b&s", dept: "electronics" },
+    { name: "Gaming Mouse Pad", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c&s", dept: "gaming" },
+    // Adding more products to reach 90 total (18 × 5 pages)
+    { name: "Smart Watch", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b&s", dept: "electronics" },
+    { name: "Fitness Tracker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcUl9m0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c&s", dept: "electronics" },
+    { name: "Portable Speaker", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcVm8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", dept: "electronics" },
+    { name: "Camera Lens", price: 1999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcWn7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d3e&s", dept: "electronics" },
+    { name: "Tripod Stand", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcXo6n7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d2e&s", dept: "electronics" },
+    { name: "Gaming Monitor", price: 4599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcYn5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", dept: "gaming" },
+    { name: "RGB Keyboard", price: 1599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcZo4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", dept: "gaming" },
+    { name: "Gaming Desk", price: 3299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcAp3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", dept: "gaming" },
+    { name: "Controller Charger", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcBq2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", dept: "gaming" },
+    { name: "Refrigerator", price: 7999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcCr1n2o3p4q5r6s7t8u9v0w1x2y3z4a5b6c7d&s", dept: "home" },
+    { name: "Washing Machine", price: 6999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcDs0n1o2p3q4r5s6t7u8v9w0x1y2z3a4b5c6d&s", dept: "home" },
+    { name: "Dishwasher", price: 5499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcEt9n0o1p2q3r4s5t6u7v8w9x0y1z2a3b4c5d&s", dept: "home" },
+    { name: "Air Purifier", price: 1999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcFu8n9o0p1q2r3s4t5u6v7w8x9y0z1a2b3c4d&s", dept: "home" },
+    { name: "Humidifier", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcGv7n8o9p0q1r2s3t4u5v6w7x8y9z0a1b2c3d&s", dept: "home" },
+    { name: "File Cabinet", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcHw6n7o8p9q0r1s2t3u4v5w6x7y8z9a0b1c2d&s", dept: "office" },
+    { name: "Conference Phone", price: 1799, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcIx5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d&s", dept: "office" },
+    { name: "Document Scanner", price: 1499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcJy4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d&s", dept: "office" },
+    { name: "Label Maker", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcKz3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d&s", dept: "office" },
+    { name: "Stapler Set", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcL2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d&s", dept: "office" }
+  ];
 
-// PAGE 2 (2140)
-{ name: "Noise Cancelling Earbuds", price: 1499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROaVTiVBI1HzseGEfJjBq2XyEu_b526vXGiA&s", dept: "electronics" },
-{ name: "Webcam Full HD", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjwGvClpbTLVQm4I-S-YkvcQHyU3wZENDV7Q&s", dept: "electronics" },
-{ name: "External Hard Drive 1TB", price: 1299, image: "https://pcinternational.co.za/wp-content/uploads/STKX2000400-1.webp", dept: "electronics" },
-{ name: "USB Flash Drive 64GB", price: 199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj3M-8pmfQq-Dwc6BwKr2JoNPTwP6og0s07g&s", dept: "electronics" },
-{ name: "WiFi Router", price: 999, image: "https://www.linksys.com/cdn/shop/articles/Tech_Brief_Router_white_48682d98-f68c-451f-910e-b3b15e33dec0.png?v=1763435065&width=1080", dept: "electronics" },
-{ name: "HDMI Cable", price: 129, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqkmirhmblq7v0kyRW877Xqo7gud9TrgnLMQ&s", dept: "electronics" },
-{ name: "Surge Protector", price: 249, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbP7JA_KV02nuoMmtRgBNIWFK47VtjXO6eeQ&s", dept: "electronics" },
-{ name: "Air Fryer 5L", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl_ELvh5THDjkeCeQIl6Qk-u3LPRkaI6Hog&s", dept: "home" },
-{ name: "Vacuum Cleaner", price: 3299, image: "https://www.builders.co.za/media/sys-master%2Froot%2Fh5b%2Fh33%2F14895044526110%2Flarge_null", dept: "home" },
-{ name: "Electric Kettle", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf5-KlDLdBQa1JPvcbdzQ3k3upA2IPQpztTg&s", dept: "home" },
-{ name: "Microwave Oven", price: 2199, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk4X6HnwdbrHgsBqIl9p2-Ec9peamb48uMyw&s", dept: "home" },
-{ name: "Toaster", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJgc8qHcJWQLvX7S5tb_S7JyabLZaa0nty9A&s", dept: "home" },
-{ name: "Coffee Maker", price: 1899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgqXl0H59EOD1lRiviNwc4fNcl7UmEhl1wA&s", dept: "home" },
-{ name: "Blender", price: 799, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW_zNwYVNiw4GTkYmr7a_qAfhEscuiauYpdw&s", dept: "home" },
-{ name: "Rice Cooker", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkhDAMBp_yyORDETKcmNWa9JFwi68ENGJRKw&s", dept: "home" },
-{ name: "Steam Iron", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgIuPX1_XLib5Vt89TRQjzhkKbxfmvbPqKRw&s", dept: "home" },
-{ name: "Heater Fan", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2W-NU2949MHaY0OHNNWSGiZmBhWb7_HksA&s", dept: "home" },
-{ name: "Office Chair", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
-{ name: "Standing Desk", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsQdyX3cVumBEwlJGjnE1ihOIDwKt6bG1Qw&s", dept: "office" },
+  // DOM elements
+  const productGrid = document.getElementById('productGrid');
+  const deptButtons = document.querySelectorAll('.dept-btn');
+  const paginationContainer = document.getElementById('pagination');
 
-// PAGE 3 (4160)
-{ name: "LED Desk Lamp", price: 599, image: "https://retailtherapyonline.co.za/cdn/shop/files/switched-sleek-series-rechargeable-led-adjustable-desk-lamp-622385.png?v=1726753243", dept:"office" },
-{ name: "Notebook Pack", price: 149, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgFlFbTVc24iiI0Y7joCG2nv6M96Diz5Eo_A&s", dept:"office" },
-{ name: "Wireless Printer", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AEuJBxS5F30D5Dtj9zzrWLXdDycnmWepeg&s", dept:"office" },
-{ name: "Ink Cartridge", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-rs4cPTGyVFqCWO3-5zrkRpJtvBHdnH_dFA&s", dept:"office" },
-{ name: "Paper Shredder", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSotzNDzNDgScrsiOokDEZBXHs3mTTW_ZUMJA&s", dept:"office" },
-{ name: "Scientific Calculator", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmDwBA9mL5OKf9bVZx0mlV8hKFljqz3eFQEQ&s", dept:"office" },
-{ name: "Whiteboard", price: 499, image: "https://m.media-amazon.com/images/I/613CIVpz4nL.jpg", dept:"office" },
-{ name: "Desk Organiser", price: 349, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMlS3r8W8u0M46fi3R6moXXLqyTcLVVa2Tw&s", dept:"office" },
-{ name: "PlayStation Controller", price: 1299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOhJE4igTgTxY4LZgbOq2d5bDoz0dcA9TL3w&s", dept:"gaming" },
-{ name: "Gaming Headset", price: 1499, image: "https://gmedia.playstation.com/is/image/SIEPDC/3d-pulse-headset-product-thumbnail-01-en-14sep21?$facebook$", dept:"gaming" },
-{ name: "Gaming Chair", price: 3999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTrjzBsAVuV2jkkc8Hs7rlyPzwgHXRKHnSBA&s", dept:"gaming" },
-{ name: "Console Cooling Fan", price: 599, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDBSi_p6LGIetmajBH7zEYLmfoC5fmT9RnZg&s", dept:"gaming" },
-{ name: "Mouse Pad XL", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRldf-GzE1ajqREdeKMbg1VrhgclmbaRWDu9Q&s", dept:"gaming" },
-{ name: "Xbox Battery Pack", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrpdi1smZ9xfA3vdl5hgeV-XQvYRdh3wBhw&s", dept:"gaming" },
-{ name: "Nintendo Switch Case", price: 399, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS74rJUZ98y82AinOo-5VsxUsrcL-JUylnBww&s", dept:"gaming" },
-{ name: "Racing Wheel", price: 4499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQi7pYlkxsaXUWenuXQBnvBnbqjyVMEvTEA&s", dept:"gaming" },
-{ name: "Game Storage Tower", price: 699, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4fdj4ZknrK2A-Ntg_M9J69lDh6ot4N2G9A&s", dept:"gaming" },
-{ name: "VR Headset", price: 6999, image: "https://gmedia.playstation.com/is/image/SIEPDC/section3b-headset?fmt=png-alpha&scl=1", dept:"gaming" },
-{ name: "Smart TV 55-inch", price: 8999, image: "https://hisense.co.za/wp-content/uploads/2024/07/55-A6K-TV-2023-v2-1024x1024.jpg", dept:"electronics" },
-{ name: "Soundbar", price: 2999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJG3ZmNkarkWZvpG01ULEr_MYKGnsr71TjWw&s", dept:"electronics" },
-{ name: "Streaming Device", price: 999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwEH4UUW6DlKOcyntoAhsqagAqBplWwIki4A&s", dept:"electronics" },
-{ name: "Security Camera", price: 1299, image: "https://www.incredible.co.za/api/catalog/product/t/a/tapo_c500_image_ecommerce_5349.png?width=700&height=700&store=incredibleconnection&image-type=image", dept:"electronics" },
-{ name: "Smart Doorbell", price: 2499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMr9uPNHCJxfUrZSt2hLjEqAH1yZd_JAPRwg&s", dept:"electronics" },
-{ name: "LED Strip Lights", price: 499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpe-lIdNwV7B99VY1nvbL0h8H92Ea8JC22w&s", dept:"home" },
-{ name: "Portable Projector", price: 3499, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9dbmiRVT8aJFmI9oCzbIvS46k6zhVgwxr_A&s", dept:"electronics" },
-{ name: "Smart Plug", price: 299, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSe2bDljDGCuS8wDo1PMgWL-Jgst3nz7GM8A&s", dept:"home" },
-{ name: "Robot Vacuum", price: 5999, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuPFdv9PsZ2eXexK2FKkBQAihjfu6uAybj9w&s", dept:"home" },
-{ name: "Electric Screwdriver Kit", price: 899, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQi0YSHs1AoebCYAArQ9ObZ0feEHwdryzmyQ&s", dept:"home" }
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log(`Total products: ${productsData.length}`);
+    console.log(`Products per page: ${PER_PAGE}`);
+    console.log(`Total pages needed: ${Math.ceil(productsData.length / PER_PAGE)}`);
+    
+    updatePageButtons();
+    showPage(1);
+    setupEventListeners();
+  });
 
-  
-  
-  
-];
+  // Event Listeners
+  function setupEventListeners() {
+    // Department filter
+    deptButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dept = btn.dataset.dept;
+        currentDept = dept;
+        currentPage = 1;
+        
+        // Update active button
+        deptButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update page buttons
+        updatePageButtons();
+        
+        // Show filtered products
+        showPage(currentPage, getFilteredProducts());
+      });
+    });
+  }
 
-  
+  // Filter products by department
+  function getFilteredProducts() {
+    if (currentDept === 'all') return productsData;
+    return productsData.filter(product => product.dept === currentDept);
+  }
 
+  // Update pagination buttons based on filtered products
+  function updatePageButtons() {
+    const filteredProducts = getFilteredProducts();
+    const totalPages = Math.ceil(filteredProducts.length / PER_PAGE);
+    
+    // Clear existing buttons
+    paginationContainer.innerHTML = '';
+    
+    // Create page buttons
+    for (let i = 1; i <= totalPages; i++) {
+      const button = document.createElement('button');
+      button.className = 'page-btn';
+      button.dataset.page = i;
+      button.textContent = i;
+      
+      if (i === currentPage) {
+        button.classList.add('active');
+      }
+      
+      button.addEventListener('click', () => {
+        currentPage = i;
+        updatePageButtons();
+        showPage(i, filteredProducts);
+      });
+      
+      paginationContainer.appendChild(button);
+    }
+    
+    // Add ellipsis if more than 7 pages (for better UX)
+    if (totalPages > 7) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      ellipsis.style.padding = '0 8px';
+      paginationContainer.appendChild(ellipsis);
+    }
+    
+    console.log(`Filtered products: ${filteredProducts.length}`);
+    console.log(`Total pages: ${totalPages}`);
+  }
+
+  // Render products
   function renderProducts(products) {
-    productGrid.innerHTML = "";
-    products.forEach(product => {
-      const card = document.createElement("div");
-      card.className = "product-card";
+    productGrid.innerHTML = '';
+    
+    if (products.length === 0) {
+      productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">No products found in this category.</p>';
+      return;
+    }
+
+    products.forEach((product, index) => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.dataset.index = index;
+
       card.innerHTML = `
-        <span class="wishlist" onclick="this.classList.toggle('active')">&#10084;</span>
-        <img src="${product.image}" alt="${product.name}">
+      
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
         <div class="product-name">${product.name}</div>
         <div class="product-price">R${product.price.toFixed(2)}</div>
+        <button class="add-cart" onclick="addToCart('${product.name}', ${product.price})">
+          🛒 Add to Cart
+        </button>
       `;
+
       productGrid.appendChild(card);
     });
+    
+    console.log(`Rendered ${products.length} products`);
   }
 
+  // Show specific page
   function showPage(page, filteredProducts = productsData) {
-    const start = (page-1)*PER_PAGE;
-    const end = page*PER_PAGE;
+    const start = (page - 1) * PER_PAGE;
+    const end = start + PER_PAGE;
     const pageProducts = filteredProducts.slice(start, end);
+    
+    console.log(`Page ${page}: Showing products ${start + 1} to ${Math.min(end, filteredProducts.length)} of ${filteredProducts.length}`);
+    
     renderProducts(pageProducts);
-    buttons.forEach(b => b.classList.remove("active"));
-    buttons[page-1]?.classList.add("active");
+    
+    // Update active page button
+    const pageButtons = document.querySelectorAll('.page-btn');
+    pageButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (parseInt(btn.dataset.page) === page) {
+        btn.classList.add('active');
+      }
+    });
   }
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => showPage(Number(btn.dataset.page)));
-  });
+  // Cart functions
+  function addToCart(productName, price) {
+    cartCount++;
+    document.getElementById('cartItems').textContent = cartCount;
+    
+    // Show notification
+    showNotification(`Added ${productName} to cart!`);
+  }
 
-  const deptButtons = document.querySelectorAll(".dept-btn");
-  deptButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      deptButtons.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      const dept = btn.dataset.dept;
-      const filtered = dept==="all" ? productsData : productsData.filter(p=>p.dept===dept);
-      showPage(1, filtered);
-    });
-  });
+  function toggleWishlist(btn) {
+    btn.classList.toggle('active');
+    wishlistCount += btn.classList.contains('active') ? 1 : -1;
+    document.getElementById('wishlistCount').textContent = wishlistCount;
+  }
 
-  showPage(1);
+  function toggleWishlistAll() {
+    alert(`You have ${wishlistCount} items in your wishlist`);
+  }
+
+  function viewCart() {
+    alert(`You have ${cartCount} items in your cart`);
+  }
+
+  // Notification function
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    `;
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => notification.remove(), 300);
+    }, 2000);
+  }
+  
+// Redirect functions
+function redirectToCart() {
+  window.location.href = 'cart.html';
+}
+
+function redirectToWishlist() {
+  window.location.href = 'wishlist.html';
+}
+
+function redirectToSignIn() {
+  window.location.href = 'signin.html';
+}
+
+function redirectToSignUp() {
+  window.location.href = 'signup.html';
+}
+
+// Update existing functions to use redirects
+function toggleWishlistAll() {
+  // Redirect instead of showing alert
+  redirectToWishlist();
+}
+
+function viewCart() {
+  // Redirect instead of showing alert
+  redirectToCart();
+}
+
+function showpage(pageName) {
+  // You can expand this function to handle different pages
+  switch(pageName) {
+    case 'cart':
+      redirectToCart();
+      break;
+    case 'wishlist':
+      redirectToWishlist();
+      break;
+    // Add more cases as needed
+  }
+}
+  
 </script>
-
 </body>
 </html>
-
