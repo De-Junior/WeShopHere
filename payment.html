@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - WeShopOnline</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    header {
+      background: #1f2937;
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 28px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .back-to-checkout {
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-to-checkout:hover {
+      text-decoration: underline;
+    }
+
+    /* Main Container */
+    .payment-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 40px;
+    }
+
+    @media (max-width: 1024px) {
+      .payment-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Checkout Steps */
+    .checkout-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .checkout-steps:before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e5e7eb;
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-bottom: 8px;
+      border: 2px solid #fff;
+    }
+
+    .step.completed .step-number {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .step.active .step-number {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .step-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .step.completed .step-label {
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    .step.active .step-label {
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    /* Payment Section */
+    .payment-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      font-size: 18px;
+    }
+
+    /* Payment Method Details */
+    .payment-method-details {
+      display: none;
+    }
+
+    .payment-method-details.active {
+      display: block;
+    }
+
+    /* Card Payment */
+    .card-payment {
+      margin-top: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .card-icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 24px;
+      background: #f3f4f6;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .card-icon.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* PayFast Payment */
+    .payfast-payment {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .payfast-logo {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .payfast-info {
+      margin: 20px 0;
+    }
+
+    .payfast-info p {
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .payfast-btn {
+      background: #ff6200;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .payfast-btn:hover {
+      background: #e55a00;
+    }
+
+    /* EFT Payment */
+    .eft-payment {
+      padding: 20px;
+    }
+
+    .bank-details {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .bank-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .bank-detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .bank-detail-label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .bank-detail-value {
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .reference-number {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2563eb;
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: #eff6ff;
+      border-radius: 8px;
+    }
+
+    .upload-receipt {
+      margin-top: 20px;
+    }
+
+    .upload-area {
+      border: 2px dashed #d1d5db;
+      border-radius: 8px;
+      padding: 40px 20px;
+      text-align: center;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-area:hover {
+      border-color: #2563eb;
+      background: #f8fafc;
+    }
+
+    .upload-area i {
+      font-size: 32px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    /* Cash on Delivery */
+    .cash-payment {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .cash-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .cash-info {
+      margin: 20px 0;
+    }
+
+    .cash-info p {
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 40px;
+    }
+
+    .order-summary-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #1f2937;
+    }
+
+    .order-items {
+      margin-bottom: 24px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-item-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f9fafb;
+    }
+
+    .order-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .order-item-details {
+      flex: 1;
+    }
+
+    .order-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #1f2937;
+    }
+
+    .order-item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: #16a34a;
+    }
+
+    /* Order Details */
+    .order-details {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .detail-row.total {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* Complete Payment Button */
+    .complete-payment-btn {
+      width: 100%;
+      padding: 18px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .complete-payment-btn:hover:not(:disabled) {
+      background: #0da271;
+      transform: translateY(-2px);
+    }
+
+    .complete-payment-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    /* Loading */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Secure Checkout */
+    .secure-checkout {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .secure-checkout p {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Success Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      text-align: center;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-icon {
+      font-size: 64px;
+      color: #10b981;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .modal-message {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #1f2937;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* Error Messages */
+    .error-message {
+      color: #dc2626;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .has-error input {
+      border-color: #dc2626 !important;
+    }
+
+    .has-error .error-message {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">WeShopOnline</a></div>
+  <a href="checkout.html" class="back-to-checkout">
+    ← Back to Checkout
+  </a>
+</header>
+
+<main class="payment-container">
+  <!-- Payment Form -->
+  <div class="payment-form">
+    <!-- Progress Steps -->
+    <div class="checkout-steps">
+      <div class="step completed">
+        <div class="step-number">1</div>
+        <div class="step-label">Cart</div>
+      </div>
+      <div class="step completed">
+        <div class="step-number">2</div>
+        <div class="step-label">Information</div>
+      </div>
+      <div class="step active">
+        <div class="step-number">3</div>
+        <div class="step-label">Payment</div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-label">Confirmation</div>
+      </div>
+    </div>
+
+    <!-- Payment Method Display -->
+    <div class="payment-section">
+      <div class="section-title">
+        <i>💳</i> Payment Method
+      </div>
+      <div class="payment-method-display" id="paymentMethodDisplay">
+        <!-- Method will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Card Payment Details -->
+    <div class="payment-section payment-method-details" id="cardDetails">
+      <div class="section-title">
+        <i>💳</i> Card Details
+      </div>
+      <div class="card-payment">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="cardNumber">Card Number *</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+            <div class="error-message">Please enter a valid card number</div>
+            <div class="card-icons">
+              <div class="card-icon" id="visaIcon">Visa</div>
+              <div class="card-icon" id="mastercardIcon">MC</div>
+              <div class="card-icon" id="amexIcon">Amex</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardName">Name on Card *</label>
+            <input type="text" id="cardName" placeholder="John Doe">
+            <div class="error-message">Please enter the name on card</div>
+          </div>
+          <div class="form-group">
+            <label for="expiryDate">Expiry Date *</label>
+            <input type="text" id="expiryDate" placeholder="MM/YY">
+            <div class="error-message">Please enter expiry date</div>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV *</label>
+            <input type="text" id="cvv" placeholder="123" maxlength="3">
+            <div class="error-message">Please enter CVV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PayFast Payment Details -->
+    <div class="payment-section payment-method-details" id="payfastDetails">
+      <div class="payfast-payment">
+        <div class="payfast-logo">⚡</div>
+        <h3>PayFast Secure Payment</h3>
+        <div class="payfast-info">
+          <p>You will be redirected to PayFast's secure payment gateway</p>
+          <p>PayFast accepts all major credit/debit cards and EFT</p>
+        </div>
+        <button class="payfast-btn" onclick="processPayFast()">
+          Proceed to PayFast
+        </button>
+      </div>
+    </div>
+
+    <!-- EFT Payment Details -->
+    <div class="payment-section payment-method-details" id="eftDetails">
+      <div class="eft-payment">
+        <h3>Bank Transfer (EFT) Details</h3>
+        <p>Please use the following details to make your payment:</p>
+        
+        <div class="bank-details">
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Bank:</span>
+            <span class="bank-detail-value">Standard Bank</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Account Name:</span>
+            <span class="bank-detail-value">WeShopOnline (Pty) Ltd</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Account Number:</span>
+            <span class="bank-detail-value">0123456789</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Branch Code:</span>
+            <span class="bank-detail-value">051001</span>
+          </div>
+          <div class="bank-detail-row">
+            <span class="bank-detail-label">Reference:</span>
+            <span class="bank-detail-value" id="eftReference">WS-123456</span>
+          </div>
+        </div>
+        
+        <div class="reference-number">
+          Reference: <span id="referenceNumber">WS-123456</span>
+        </div>
+        
+        <div class="upload-receipt">
+          <p>Once payment is made, please upload your proof of payment:</p>
+          <div class="upload-area" onclick="document.getElementById('receiptUpload').click()">
+            <i>📎</i>
+            <p>Click to upload proof of payment</p>
+            <p style="font-size: 12px; color: #9ca3af;">PDF, JPG, or PNG (Max 5MB)</p>
+            <input type="file" id="receiptUpload" class="upload-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleReceiptUpload()">
+          </div>
+          <div id="uploadStatus"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cash on Delivery Details -->
+    <div class="payment-section payment-method-details" id="cashDetails">
+      <div class="cash-payment">
+        <div class="cash-icon">💵</div>
+        <h3>Cash on Delivery</h3>
+        <div class="cash-info">
+          <p>Pay with cash when your order is delivered</p>
+          <p>A R50 delivery fee applies to cash orders</p>
+          <p>Please have the exact amount ready</p>
+        </div>
+        <p style="color: #dc2626; font-weight: 600;">Note: Orders above R5000 cannot use cash on delivery</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <h2 class="order-summary-title">Order Summary</h2>
+    
+    <!-- Order Items -->
+    <div class="order-items" id="orderItems">
+      <!-- Items will be populated by JavaScript -->
+    </div>
+
+    <!-- Order Details -->
+    <div class="order-details">
+      <div class="detail-row">
+        <span>Subtotal</span>
+        <span id="subtotal">R0.00</span>
+      </div>
+      <div class="detail-row">
+        <span>Shipping</span>
+        <span id="shipping">R99.00</span>
+      </div>
+      <div class="detail-row" style="color: #10b981;">
+        <span>Discount</span>
+        <span id="discount">-R0.00</span>
+      </div>
+      <div class="detail-row total">
+        <span>Total</span>
+        <span id="total">R0.00</span>
+      </div>
+    </div>
+
+    <!-- Shipping Address -->
+    <div class="shipping-address" id="shippingAddress">
+      <!-- Address will be populated by JavaScript -->
+    </div>
+
+    <!-- Complete Payment Button -->
+    <button class="complete-payment-btn" id="completePaymentBtn" onclick="completePayment()">
+      <span id="btnText">Complete Payment</span>
+      <span id="btnLoading" class="loading" style="display: none;"></span>
+    </button>
+
+    <!-- Secure Checkout -->
+    <div class="secure-checkout">
+      <p>🔒 Secure Payment • 256-bit SSL Encryption</p>
+      <p style="font-size: 11px; color: #9ca3af;">Your payment information is encrypted and secure</p>
+    </div>
+  </div>
+</main>
+
+<!-- Success Modal (This will show briefly before redirect) -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-content">
+    <div class="modal-icon">🎉</div>
+    <h2 class="modal-title">Payment Successful!</h2>
+    <p class="modal-message">Thank you for your purchase. Your payment has been processed successfully.</p>
+    
+    <div class="order-details" style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p><strong>Order Number:</strong> <span id="orderNumber">#ORD-123456</span></p>
+      <p><strong>Amount Paid:</strong> <span id="amountPaid">R0.00</span></p>
+      <p><strong>Payment Method:</strong> <span id="paymentMethod">Credit Card</span></p>
+      <p><strong>Estimated Delivery:</strong> 5-7 working days</p>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn btn-secondary" onclick="continueShopping()">Continue Shopping</button>
+      <button class="modal-btn btn-primary" onclick="trackOrder()">Track Order</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Retrieve data from localStorage
+  const checkoutData = JSON.parse(localStorage.getItem('checkoutData'));
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [
+    { name: "Power Bank 20000mAh", price: 699, quantity: 1, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg" },
+    { name: "Gaming Mouse", price: 499, quantity: 2, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s" },
+    { name: "Wireless Headphones", price: 899, quantity: 1, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s" }
+  ];
+
+  let selectedPaymentMethod = 'card';
+  let subtotal = 0;
+  let shipping = 99;
+  let discount = 0;
+  let total = 0;
+  let orderNumber = generateOrderNumber();
+
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!checkoutData) {
+      alert('No checkout data found. Please complete the checkout form first.');
+      window.location.href = 'checkout.html';
+      return;
+    }
+
+    selectedPaymentMethod = checkoutData.paymentMethod || 'card';
+    
+    renderOrderItems();
+    renderShippingAddress();
+    updateTotals();
+    showPaymentMethod();
+    setupEventListeners();
+    updateReferenceNumber();
+  });
+
+  // Render order items
+  function renderOrderItems() {
+    const orderItems = document.getElementById('orderItems');
+    orderItems.innerHTML = '';
+    
+    cartItems.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'order-item';
+      itemElement.innerHTML = `
+        <div class="order-item-image">
+          <img src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="order-item-details">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-price">R${item.price.toFixed(2)}</div>
+        </div>
+        <div style="font-size: 14px; color: #6b7280;">×${item.quantity}</div>
+      `;
+      orderItems.appendChild(itemElement);
+      
+      subtotal += item.price * item.quantity;
+    });
+  }
+
+  // Render shipping address
+  function renderShippingAddress() {
+    const shippingAddress = document.getElementById('shippingAddress');
+    if (checkoutData.shipping) {
+      shippingAddress.innerHTML = `
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #374151;">Shipping to:</h4>
+          <p style="font-size: 13px; color: #6b7280; line-height: 1.4;">
+            ${checkoutData.shipping.firstName} ${checkoutData.shipping.lastName}<br>
+            ${checkoutData.shipping.address}<br>
+            ${checkoutData.shipping.city}, ${checkoutData.shipping.province}<br>
+            ${checkoutData.shipping.postalCode}
+          </p>
+        </div>
+      `;
+    }
+  }
+
+  // Update totals
+  function updateTotals() {
+    // Check for promo code in localStorage
+    const promoApplied = localStorage.getItem('promoApplied') === 'true';
+    discount = promoApplied ? subtotal * 0.1 : 0;
+    
+    // Add extra fee for cash on delivery
+    const cashFee = selectedPaymentMethod === 'cash' ? 50 : 0;
+    
+    total = subtotal + shipping - discount + cashFee;
+    
+    document.getElementById('subtotal').textContent = `R${subtotal.toFixed(2)}`;
+    document.getElementById('discount').textContent = `-R${discount.toFixed(2)}`;
+    document.getElementById('total').textContent = `R${total.toFixed(2)}`;
+    document.getElementById('amountPaid').textContent = `R${total.toFixed(2)}`;
+  }
+
+  // Show payment method details
+  function showPaymentMethod() {
+    const paymentMethodDisplay = document.getElementById('paymentMethodDisplay');
+    const paymentMethods = {
+      'card': 'Credit/Debit Card',
+      'payfast': 'PayFast',
+      'eft': 'Bank Transfer (EFT)',
+      'cash': 'Cash on Delivery'
+    };
+
+    paymentMethodDisplay.innerHTML = `
+      <div style="padding: 20px; background: #f9fafb; border-radius: 8px; margin-bottom: 20px;">
+        <h3 style="font-size: 18px; margin-bottom: 8px; color: #1f2937;">
+          ${paymentMethods[selectedPaymentMethod]}
+        </h3>
+        <p style="color: #6b7280; font-size: 14px;">
+          ${getPaymentDescription(selectedPaymentMethod)}
+        </p>
+        <button onclick="changePaymentMethod()" style="margin-top: 10px; background: none; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; font-size: 14px; color: #2563eb;">
+          Change Payment Method
+        </button>
+      </div>
+    `;
+
+    // Show only the selected payment method details
+    document.querySelectorAll('.payment-method-details').forEach(el => {
+      el.classList.remove('active');
+    });
+    
+    document.getElementById(`${selectedPaymentMethod}Details`).classList.add('active');
+  }
+
+  // Get payment description
+  function getPaymentDescription(method) {
+    const descriptions = {
+      'card': 'Enter your card details securely below',
+      'payfast': 'Secure online payments via PayFast gateway',
+      'eft': 'Make payment directly from your bank account',
+      'cash': 'Pay with cash when your order is delivered'
+    };
+    return descriptions[method] || '';
+  }
+
+  // Change payment method
+  function changePaymentMethod() {
+    if (confirm('Changing payment method will take you back to the checkout page. Continue?')) {
+      window.location.href = 'checkout.html';
+    }
+  }
+
+  // Update reference number for EFT
+  function updateReferenceNumber() {
+    const referenceNumber = `WS-${Math.floor(100000 + Math.random() * 900000)}`;
+    document.getElementById('eftReference').textContent = referenceNumber;
+    document.getElementById('referenceNumber').textContent = referenceNumber;
+  }
+
+  // Setup event listeners
+  function setupEventListeners() {
+    // Card number formatting
+    const cardNumber = document.getElementById('cardNumber');
+    cardNumber.addEventListener('input', formatCardNumber);
+    cardNumber.addEventListener('input', detectCardType);
+
+    // Expiry date formatting
+    const expiryDate = document.getElementById('expiryDate');
+    expiryDate.addEventListener('input', formatExpiryDate);
+
+    // CVV input restriction
+    const cvv = document.getElementById('cvv');
+    cvv.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+    });
+
+    // Form validation on blur
+    const inputs = document.querySelectorAll('input[required]');
+    inputs.forEach(input => {
+      input.addEventListener('blur', validateField);
+    });
+  }
+
+  // Format card number
+  function formatCardNumber(e) {
+    let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    let formatted = '';
+    
+    for (let i = 0; i < value.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formatted += ' ';
+      }
+      formatted += value[i];
+    }
+    
+    e.target.value = formatted.substring(0, 19);
+  }
+
+  // Detect card type
+  function detectCardType(e) {
+    const value = e.target.value.replace(/\s/g, '');
+    const visaIcon = document.getElementById('visaIcon');
+    const mastercardIcon = document.getElementById('mastercardIcon');
+    const amexIcon = document.getElementById('amexIcon');
+    
+    // Reset all icons
+    [visaIcon, mastercardIcon, amexIcon].forEach(icon => {
+      icon.classList.remove('active');
+    });
+    
+    if (/^4/.test(value)) {
+      visaIcon.classList.add('active');
+    } else if (/^5[1-5]/.test(value)) {
+      mastercardIcon.classList.add('active');
+    } else if (/^3[47]/.test(value)) {
+      amexIcon.classList.add('active');
+    }
+  }
+
+  // Format expiry date
+  function formatExpiryDate(e) {
+    let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    
+    if (value.length >= 2) {
+      e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    } else {
+      e.target.value = value;
+    }
+  }
+
+  // Validate field
+  function validateField(e) {
+    const field = e.target;
+    const value = field.value.trim();
+    const formGroup = field.closest('.form-group');
+    
+    if (!formGroup) return;
+    
+    let isValid = true;
+    let errorMessage = '';
+    
+    // Clear previous error
+    formGroup.classList.remove('has-error');
+    
+    // Check if field is empty
+    if (!value) {
+      isValid = false;
+      errorMessage = 'This field is required';
+    } else {
+      // Specific validations
+      switch (field.id) {
+        case 'cardNumber':
+          if (value.replace(/\s/g, '').length < 16) {
+            isValid = false;
+            errorMessage = 'Please enter a valid card number';
+          }
+          break;
+          
+        case 'expiryDate':
+          if (!/^\d{2}\/\d{2}$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Please enter expiry in MM/YY format';
+          }
+          break;
+          
+        case 'cvv':
+          if (value.length !== 3 || !/^\d+$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Please enter a valid CVV';
+          }
+          break;
+      }
+    }
+    
+    if (!isValid) {
+      formGroup.classList.add('has-error');
+      const errorElement = formGroup.querySelector('.error-message');
+      if (errorElement) {
+        errorElement.textContent = errorMessage;
+      }
+    }
+    
+    return isValid;
+  }
+
+  // Process PayFast payment
+  function processPayFast() {
+    const btn = document.querySelector('.payfast-btn');
+    const originalText = btn.textContent;
+    
+    btn.textContent = 'Redirecting to PayFast...';
+    btn.disabled = true;
+    
+    // Simulate redirect to PayFast
+    setTimeout(() => {
+      // In a real app, this would submit to PayFast
+      completePayment();
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 2000);
+  }
+
+  // Handle receipt upload
+  function handleReceiptUpload() {
+    const fileInput = document.getElementById('receiptUpload');
+    const uploadStatus = document.getElementById('uploadStatus');
+    
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      
+      // Check file size (5MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        uploadStatus.innerHTML = '<p style="color: #dc2626;">File size must be less than 5MB</p>';
+        return;
+      }
+      
+      // Check file type
+      const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!validTypes.includes(file.type)) {
+        uploadStatus.innerHTML = '<p style="color: #dc2626;">Please upload PDF, JPG, or PNG files only</p>';
+        return;
+      }
+      
+      // Simulate upload
+      uploadStatus.innerHTML = '<p style="color: #10b981;">Uploading receipt...</p>';
+      
+      setTimeout(() => {
+        uploadStatus.innerHTML = `
+          <p style="color: #10b981;">✓ Receipt uploaded successfully!</p>
+          <p style="font-size: 12px; color: #6b7280;">File: ${file.name}</p>
+        `;
+        document.getElementById('completePaymentBtn').disabled = false;
+      }, 1500);
+    }
+  }
+
+  // Complete payment
+  function completePayment() {
+    // Validate card details if paying by card
+    if (selectedPaymentMethod === 'card') {
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardName = document.getElementById('cardName').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+      
+      if (!cardNumber || !cardName || !expiryDate || !cvv) {
+        alert('Please fill in all card details');
+        return;
+      }
+      
+      if (cardNumber.replace(/\s/g, '').length < 16) {
+        alert('Please enter a valid card number');
+        return;
+      }
+    }
+    
+    // Validate EFT receipt upload
+    if (selectedPaymentMethod === 'eft') {
+      const uploadStatus = document.getElementById('uploadStatus').innerHTML;
+      if (!uploadStatus.includes('successfully')) {
+        alert('Please upload proof of payment before completing the order');
+        return;
+      }
+    }
+    
+    // Show loading state
+    const btnText = document.getElementById('btnText');
+    const btnLoading = document.getElementById('btnLoading');
+    const completeBtn = document.getElementById('completePaymentBtn');
+    
+    btnText.textContent = 'Processing Payment...';
+    btnLoading.style.display = 'inline-block';
+    completeBtn.disabled = true;
+    
+
+      
+      localStorage.setItem('orderData', JSON.stringify(orderData));
+      
+      // Clear cart and checkout data
+      localStorage.removeItem('cart');
+      localStorage.removeItem('checkoutData');
+      
+      // Reset button state
+      btnText.textContent = 'Complete Payment';
+      btnLoading.style.display = 'none';
+      completeBtn.disabled = false;
+      
+      // Show success modal briefly, then redirect
+      document.getElementById('successModal').classList.add('active');
+      
+      // Redirect to confirmation page after 3 seconds
+      setTimeout(() => {
+        window.location.href = 'confirmation.html';
+      }, 3000);
+    }, 3000);
+  }
+
+  // Generate order number
+  function generateOrderNumber() {
+    return '#ORD-' + Math.floor(100000 + Math.random() * 900000);
+  }
+
+  // Continue shopping (for modal)
+  function continueShopping() {
+    window.location.href = 'index.html';
+  }
+
+  // Track order (for modal)
+  function trackOrder() {
+    alert(`Track your order using order number: ${orderNumber}`);
+    window.location.href = 'index.html';
+  }
+
+</script>
+
+</body>
+</html>

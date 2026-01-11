@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmation - WeShopOnline</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    header {
+      background: #1f2937;
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 28px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .back-to-shop {
+      color: #fff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-to-shop:hover {
+      text-decoration: underline;
+    }
+
+    /* Checkout Progress */
+    .checkout-progress {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .progress-steps:before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e5e7eb;
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 120px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-bottom: 8px;
+      border: 2px solid #fff;
+    }
+
+    .step.completed .step-number {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .step.active .step-number {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .step-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .step.active .step-label {
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    /* Confirmation Container */
+    .confirmation-container {
+      max-width: 800px;
+      margin: 40px auto 60px;
+      padding: 0 16px;
+    }
+
+    /* Success Header */
+    .success-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .success-icon {
+      font-size: 80px;
+      color: #10b981;
+      margin-bottom: 20px;
+      animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .success-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .success-subtitle {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .order-number {
+      display: inline-block;
+      background: #f0f9ff;
+      color: #0369a1;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border: 2px solid #bae6fd;
+    }
+
+    .confirmation-message {
+      font-size: 15px;
+      color: #4b5563;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Confirmation Cards */
+    .confirmation-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .confirmation-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .card-icon {
+      font-size: 24px;
+      color: #2563eb;
+      width: 48px;
+      height: 48px;
+      background: #eff6ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* Info Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-item {
+      margin-bottom: 16px;
+    }
+
+    .info-label {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-size: 16px;
+      color: #1f2937;
+      font-weight: 600;
+    }
+
+    /* Order Items */
+    .order-items-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .order-items-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .order-items-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .order-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #dcfce7;
+      color: #15803d;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-item-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f9fafb;
+      flex-shrink: 0;
+    }
+
+    .order-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .order-item-details {
+      flex: 1;
+    }
+
+    .order-item-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .order-item-sku {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .order-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .order-item-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #16a34a;
+    }
+
+    .order-item-quantity {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* Price Breakdown */
+    .price-breakdown {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .price-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .price-row.total {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .price-row.discount {
+      color: #10b981;
+    }
+
+    /* Delivery Timeline */
+    .delivery-timeline {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .timeline-icon {
+      font-size: 24px;
+      color: #f59e0b;
+      width: 48px;
+      height: 48px;
+      background: #fef3c7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline:before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e5e7eb;
+    }
+
+    .timeline-step {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-step.completed:before {
+      background: #10b981;
+      border-color: #10b981;
+    }
+
+    .timeline-step.current:before {
+      background: #2563eb;
+      border-color: #2563eb;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    .timeline-step:before {
+      content: '';
+      position: absolute;
+      left: -45px;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      border: 3px solid #fff;
+      z-index: 2;
+    }
+
+    .timeline-step.completed:after {
+      content: '✓';
+      position: absolute;
+      left: -41px;
+      top: 4px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 3;
+    }
+
+    .step-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .step-date {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .step-description {
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px;
+      background: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .action-btn:hover {
+      border-color: #2563eb;
+      background: #eff6ff;
+      transform: translateY(-2px);
+    }
+
+    .action-icon {
+      font-size: 32px;
+      color: #2563eb;
+    }
+
+    .action-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .action-description {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* Download Section */
+    .download-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .download-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .download-icon {
+      font-size: 24px;
+      color: #7c3aed;
+      width: 48px;
+      height: 48px;
+      background: #f5f3ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .download-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #f1f5f9;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #1f2937;
+      transition: all 0.2s ease;
+    }
+
+    .download-btn:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    /* Need Help Section */
+    .help-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .help-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .help-icon {
+      font-size: 24px;
+      color: #dc2626;
+      width: 48px;
+      height: 48px;
+      background: #fef2f2;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .help-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .help-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .help-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .help-item-icon {
+      font-size: 20px;
+      color: #2563eb;
+      margin-top: 2px;
+    }
+
+    .help-item-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .help-item-content p {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .help-item-content a {
+      font-size: 13px;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    .help-item-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* Continue Shopping */
+    .continue-shopping {
+      text-align: center;
+      padding: 40px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .continue-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .continue-subtitle {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .continue-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 40px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .continue-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    /* Email Confirmation */
+    .email-confirmation {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .email-confirmation p {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .email-address {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    /* WhatsApp Notification */
+    .whatsapp-notification {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .whatsapp-icon {
+      font-size: 24px;
+      color: #25d366;
+    }
+
+    .whatsapp-content h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .whatsapp-content p {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* Loading State */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">WeShopOnline</a></div>
+  <div class="header-actions">
+    <a href="orders.html" class="back-to-shop">
+      📋 Order History
+    </a>
+    <a href="index.html" class="back-to-shop">
+      🏪 Continue Shopping
+    </a>
+  </div>
+</header>
+
+<!-- Checkout Progress -->
+<div class="checkout-progress">
+  <div class="progress-steps">
+    <div class="step completed">
+      <div class="step-number">1</div>
+      <div class="step-label">Cart</div>
+    </div>
+    <div class="step completed">
+      <div class="step-number">2</div>
+      <div class="step-label">Information</div>
+    </div>
+    <div class="step completed">
+      <div class="step-number">3</div>
+      <div class="step-label">Payment</div>
+    </div>
+    <div class="step active">
+      <div class="step-number">4</div>
+      <div class="step-label">Confirmation</div>
+    </div>
+  </div>
+</div>
+
+<div class="confirmation-container">
+  <!-- Success Header -->
+  <div class="success-header">
+    <div class="success-icon">🎉</div>
+    <h1 class="success-title">Thank You For Your Order!</h1>
+    <p class="success-subtitle">Your order has been confirmed and is being processed</p>
+    <div class="order-number" id="orderNumber">#ORD-123456</div>
+    <p class="confirmation-message">
+      We've sent an order confirmation to your email. You'll receive a shipping confirmation 
+      with tracking information as soon as your order ships.
+    </p>
+  </div>
+
+  <!-- Confirmation Cards -->
+  <div class="confirmation-cards">
+    <!-- Order Summary Card -->
+    <div class="confirmation-card">
+      <div class="card-header">
+        <div class="card-icon">📦</div>
+        <div>
+          <h3 class="card-title">Order Summary</h3>
+          <p class="card-subtitle">What you ordered</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Order Number</div>
+          <div class="info-value" id="summaryOrderNumber">#ORD-123456</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Order Date</div>
+          <div class="info-value" id="orderDate">Today, 10:30 AM</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Total Items</div>
+          <div class="info-value" id="totalItems">3 items</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Order Status</div>
+          <div class="info-value" id="orderStatus" style="color: #10b981;">Confirmed</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Payment Status</div>
+          <div class="info-value" id="paymentStatus" style="color: #10b981;">Paid</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Order Total</div>
+          <div class="info-value" id="orderTotal" style="color: #16a34a;">R1,626.30</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping Information Card -->
+    <div class="confirmation-card">
+      <div class="card-header">
+        <div class="card-icon">🚚</div>
+        <div>
+          <h3 class="card-title">Shipping Information</h3>
+          <p class="card-subtitle">Where we're delivering</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Delivery Method</div>
+          <div class="info-value" id="deliveryMethod">Standard Delivery</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Estimated Delivery</div>
+          <div class="info-value" id="estimatedDelivery">5-7 working days</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Shipping Address</div>
+          <div class="info-value" id="shippingAddress">123 Main Street, Cape Town</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Contact Person</div>
+          <div class="info-value" id="contactPerson">John Doe</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Contact Number</div>
+          <div class="info-value" id="contactNumber">+27 12 345 6789</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Contact Email</div>
+          <div class="info-value" id="contactEmail">customer@example.com</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Information Card -->
+    <div class="confirmation-card">
+      <div class="card-header">
+        <div class="card-icon">💳</div>
+        <div>
+          <h3 class="card-title">Payment Information</h3>
+          <p class="card-subtitle">How you paid</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Payment Method</div>
+          <div class="info-value" id="paymentMethod">Credit Card</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Card Type</div>
+          <div class="info-value" id="cardType">Visa ending in 4242</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Transaction ID</div>
+          <div class="info-value" id="transactionId">TXN-7890123456</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Payment Date</div>
+          <div class="info-value" id="paymentDate">Today, 10:30 AM</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Billing Address</div>
+          <div class="info-value" id="billingAddress">Same as shipping</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Amount Paid</div>
+          <div class="info-value" id="amountPaid" style="color: #16a34a;">R1,626.30</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Items -->
+  <div class="order-items-card">
+    <div class="order-items-header">
+      <h2 class="order-items-title">Order Details</h2>
+      <span class="order-status">✅ Order Confirmed</span>
+    </div>
+    
+    <div class="order-items" id="orderItems">
+      <!-- Items populated by JavaScript -->
+    </div>
+
+    <div class="price-breakdown">
+      <div class="price-row">
+        <span>Subtotal</span>
+        <span id="priceSubtotal">R1,697.00</span>
+      </div>
+      <div class="price-row">
+        <span>Shipping</span>
+        <span id="priceShipping">R99.00</span>
+      </div>
+      <div class="price-row discount">
+        <span>Discount (10%)</span>
+        <span id="priceDiscount">-R169.70</span>
+      </div>
+      <div class="price-row total">
+        <span>Total Paid</span>
+        <span id="priceTotal">R1,626.30</span>
+      </div>
+    </div>
+
+    <!-- Email Confirmation -->
+    <div class="email-confirmation">
+      <p>📧 A detailed receipt has been sent to <span class="email-address" id="customerEmail">customer@example.com</span></p>
+      <p>You can also view this order in your <a href="orders.html" style="color: #2563eb; font-weight: 600;">Order History</a></p>
+    </div>
+
+    <!-- WhatsApp Notification -->
+    <div class="whatsapp-notification">
+      <div class="whatsapp-icon">💬</div>
+      <div class="whatsapp-content">
+        <h4>Get WhatsApp Updates</h4>
+        <p>Receive real-time order updates on WhatsApp</p>
+      </div>
+      <button onclick="enableWhatsAppUpdates()" style="margin-left: auto; padding: 8px 16px; background: #25d366; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 13px;">Enable</button>
+    </div>
+  </div>
+
+  <!-- Delivery Timeline -->
+  <div class="delivery-timeline">
+    <div class="timeline-header">
+      <div class="timeline-icon">📅</div>
+      <h2 class="timeline-title">Delivery Timeline</h2>
+    </div>
+    
+    <div class="timeline">
+      <div class="timeline-step completed">
+        <div class="step-label">Order Confirmed</div>
+        <div class="step-date">Today, 10:30 AM</div>
+        <div class="step-description">Your order has been received and confirmed</div>
+      </div>
+      
+      <div class="timeline-step current">
+        <div class="step-label">Processing Order</div>
+        <div class="step-date">Expected: Today</div>
+        <div class="step-description">We're preparing your items for shipment</div>
+      </div>
+      
+      <div class="timeline-step">
+        <div class="step-label">Shipped</div>
+        <div class="step-date">Expected: Tomorrow</div>
+        <div class="step-description">Your order will be handed over to our delivery partner</div>
+      </div>
+      
+      <div class="timeline-step">
+        <div class="step-label">Out for Delivery</div>
+        <div class="step-date">Estimated: 3-5 days</div>
+        <div class="step-description">Your order is on its way to your address</div>
+      </div>
+      
+      <div class="timeline-step">
+        <div class="step-label">Delivered</div>
+        <div class="step-date">Estimated: 5-7 working days</div>
+        <div class="step-description">Your order will be delivered to your doorstep</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <div class="action-btn" onclick="trackOrder()">
+      <div class="action-icon">📱</div>
+      <div class="action-title">Track Order</div>
+      <div class="action-description">Real-time tracking updates</div>
+    </div>
+    
+    <div class="action-btn" onclick="viewOrderHistory()">
+      <div class="action-icon">📋</div>
+      <div class="action-title">Order History</div>
+      <div class="action-description">View all your orders</div>
+    </div>
+    
+    <div class="action-btn" onclick="downloadInvoice()">
+      <div class="action-icon">📄</div>
+      <div class="action-title">Download Invoice</div>
+      <div class="action-description">Get a copy of your receipt</div>
+    </div>
+    
+    <div class="action-btn" onclick="shopSimilarItems()">
+      <div class="action-icon">🛍️</div>
+      <div class="action-title">Shop Similar</div>
+      <div class="action-description">Browse related products</div>
+    </div>
+  </div>
+
+  <!-- Download Section -->
+  <div class="download-section">
+    <div class="download-header">
+      <div class="download-icon">📥</div>
+      <h2 class="download-title">Download Documents</h2>
+    </div>
+    
+    <div class="download-buttons">
+      <button class="download-btn" onclick="downloadInvoice()">
+        📄 Download Invoice
+      </button>
+      <button class="download-btn" onclick="downloadReceipt()">
+        🧾 Download Receipt
+      </button>
+      <button class="download-btn" onclick="downloadShippingLabel()">
+        🚚 Shipping Label
+      </button>
+      <button class="download-btn" onclick="downloadAll()">
+        📦 Download All
+      </button>
+    </div>
+  </div>
+
+  <!-- Need Help Section -->
+  <div class="help-section">
+    <div class="help-header">
+      <div class="help-icon">❓</div>
+      <h2 class="help-title">Need Help With Your Order?</h2>
+    </div>
+    
+    <div class="help-content">
+      <div class="help-item">
+        <div class="help-item-icon">📞</div>
+        <div class="help-item-content">
+          <h4>Call Us</h4>
+          <p>Speak to our customer service team</p>
+          <a href="tel:+27123456789">+27 12 345 6789</a>
+        </div>
+      </div>
+      
+      <div class="help-item">
+        <div class="help-item-icon">✉️</div>
+        <div class="help-item-content">
+          <h4>Email Us</h4>
+          <p>Send us an email with your query</p>
+          <a href="mailto:support@weshoponline.co.za">support@weshoponline.co.za</a>
+        </div>
+      </div>
+      
+      <div class="help-item">
+        <div class="help-item-icon">💬</div>
+        <div class="help-item-content">
+          <h4>Live Chat</h4>
+          <p>Chat with us in real-time</p>
+          <a href="#" onclick="openLiveChat()">Start Live Chat</a>
+        </div>
+      </div>
+      
+      <div class="help-item">
+        <div class="help-item-icon">📋</div>
+        <div class="help-item-content">
+          <h4>FAQ</h4>
+          <p>Find answers to common questions</p>
+          <a href="faq.html">View FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Continue Shopping -->
+  <div class="continue-shopping">
+    <h2 class="continue-title">Continue Shopping</h2>
+    <p class="continue-subtitle">
+      Discover more amazing products that you might love. Check out our latest collections 
+      and exclusive deals.
+    </p>
+    <button class="continue-btn" onclick="continueShopping()">
+      🛍️ Continue Shopping
+    </button>
+  </div>
+</div>
+
+<script>
+  // Order data
+  let orderData = {
+    orderNumber: generateOrderNumber(),
+    orderDate: new Date(),
+    items: JSON.parse(localStorage.getItem('cart')) || [
+      { 
+        name: "Power Bank 20000mAh", 
+        price: 699, 
+        quantity: 1, 
+        image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg",
+        sku: "PWR-20000-001"
+      },
+      { 
+        name: "Gaming Mouse", 
+        price: 499, 
+        quantity: 2, 
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s",
+        sku: "GM-001-RGB"
+      },
+      { 
+        name: "Wireless Headphones", 
+        price: 899, 
+        quantity: 1, 
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s",
+        sku: "BUD-NC-TWS"
+      }
+    ],
+    customerInfo: JSON.parse(localStorage.getItem('customerInfo')) || {
+      firstName: "John",
+      lastName: "Doe",
+      address: "123 Main Street, Cape Town",
+      city: "Cape Town",
+      province: "WC",
+      postalCode: "8001",
+      phone: "+27 12 345 6789",
+      email: "customer@example.com"
+    },
+    summary: JSON.parse(localStorage.getItem('orderSummary')) || {
+      subtotal: 1697,
+      shipping: 99,
+      discount: 169.7,
+      total: 1626.3
+    },
+    deliveryOption: localStorage.getItem('deliveryOption') || 'standard',
+    paymentMethod: 'card',
+    cardType: 'Visa ending in 4242',
+    transactionId: generateTransactionId()
+  };
+
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', () => {
+    populateOrderData();
+    renderOrderItems();
+    setupEventListeners();
+    
+    // Save order to history
+    saveOrderToHistory();
+  });
+
+  // Generate order number
+  function generateOrderNumber() {
+    const timestamp = Date.now().toString().slice(-6);
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `ORD-${timestamp}${random}`;
+  }
+
+  // Generate transaction ID
+  function generateTransactionId() {
+    const timestamp = Date.now().toString().slice(-8);
+    const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    return `TXN-${timestamp}${random}`;
+  }
+
+  // Populate order data
+  function populateOrderData() {
+    // Format date
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-ZA', options).format(orderData.orderDate);
+    
+    // Calculate totals
+    const subtotal = orderData.summary.subtotal;
+    const shipping = orderData.summary.shipping;
+    const discount = orderData.summary.discount;
+    const total = orderData.summary.total;
+    const totalItems = orderData.items.reduce((sum, item) => sum + item.quantity, 0);
+    
+    // Delivery info
+    const deliveryInfo = {
+      'standard': { name: 'Standard Delivery', days: '5-7 working days' },
+      'express': { name: 'Express Delivery', days: '2-3 working days' },
+      'pickup': { name: 'Store Pickup', days: 'Ready in 24 hours' }
+    }[orderData.deliveryOption] || { name: 'Standard Delivery', days: '5-7 working days' };
+    
+    // Update all elements
+    document.getElementById('orderNumber').textContent = `#${orderData.orderNumber}`;
+    document.getElementById('summaryOrderNumber').textContent = `#${orderData.orderNumber}`;
+    document.getElementById('orderDate').textContent = formattedDate;
+    document.getElementById('totalItems').textContent = `${totalItems} item${totalItems > 1 ? 's' : ''}`;
+    document.getElementById('orderTotal').textContent = `R${total.toFixed(2)}`;
+    
+    // Shipping info
+    document.getElementById('deliveryMethod').textContent = deliveryInfo.name;
+    document.getElementById('estimatedDelivery').textContent = deliveryInfo.days;
+    document.getElementById('shippingAddress').textContent = orderData.customerInfo.address;
+    document.getElementById('contactPerson').textContent = `${orderData.customerInfo.firstName} ${orderData.customerInfo.lastName}`;
+    document.getElementById('contactNumber').textContent = orderData.customerInfo.phone;
+    document.getElementById('contactEmail').textContent = orderData.customerInfo.email;
+    document.getElementById('customerEmail').textContent = orderData.customerInfo.email;
+    
+    // Payment info
+    document.getElementById('paymentMethod').textContent = formatPaymentMethod(orderData.paymentMethod);
+    document.getElementById('cardType').textContent = orderData.cardType;
+    document.getElementById('transactionId').textContent = orderData.transactionId;
+    document.getElementById('paymentDate').textContent = formattedDate;
+    document.getElementById('billingAddress').textContent = 'Same as shipping';
+    document.getElementById('amountPaid').textContent = `R${total.toFixed(2)}`;
+    
+    // Price breakdown
+    document.getElementById('priceSubtotal').textContent = `R${subtotal.toFixed(2)}`;
+    document.getElementById('priceShipping').textContent = `R${shipping.toFixed(2)}`;
+    document.getElementById('priceDiscount').textContent = `-R${discount.toFixed(2)}`;
+    document.getElementById('priceTotal').textContent = `R${total.toFixed(2)}`;
+  }
+
+  // Format payment method
+  function formatPaymentMethod(method) {
+    const methods = {
+      'card': 'Credit Card',
+      'payfast': 'PayFast',
+      'eft': 'Bank Transfer',
+      'cash': 'Cash on Delivery'
+    };
+    return methods[method] || method;
+  }
+
+  // Render order items
+  function renderOrderItems() {
+    const orderItems = document.getElementById('orderItems');
+    orderItems.innerHTML = '';
+    
+    orderData.items.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'order-item';
+      itemElement.innerHTML = `
+        <div class="order-item-image">
+          <img src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="order-item-details">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-sku">SKU: ${item.sku}</div>
+          <div class="order-item-meta">
+            <div class="order-item-price">R${item.price.toFixed(2)}</div>
+            <div class="order-item-quantity">Qty: ${item.quantity}</div>
+          </div>
+        </div>
+      `;
+      orderItems.appendChild(itemElement);
+    });
+  }
+
+  // Save order to history
+  function saveOrderToHistory() {
+    const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    const order = {
+      id: orderData.orderNumber,
+      date: orderData.orderDate.toISOString(),
+      items: orderData.items,
+      customer: orderData.customerInfo,
+      summary: orderData.summary,
+      status: 'Confirmed',
+      paymentMethod: orderData.paymentMethod
+    };
+    
+    // Check if order already exists
+    const existingIndex = orderHistory.findIndex(o => o.id === order.id);
+    if (existingIndex > -1) {
+      orderHistory[existingIndex] = order;
+    } else {
+      orderHistory.unshift(order);
+    }
+    
+    // Keep only last 10 orders
+    localStorage.setItem('orderHistory', JSON.stringify(orderHistory.slice(0, 10)));
+    
+    // Clear cart and checkout data
+    localStorage.removeItem('cart');
+    localStorage.removeItem('orderSummary');
+    localStorage.removeItem('customerInfo');
+    localStorage.removeItem('deliveryOption');
+  }
+
+  // Setup event listeners
+  function setupEventListeners() {
+    // No specific event listeners needed for this page
+  }
+
+  // Action functions
+  function trackOrder() {
+    alert(`Track your order using order number: ${orderData.orderNumber}\n\nYou can also track from your Order History page.`);
+  }
+
+  function viewOrderHistory() {
+    window.location.href = 'orders.html';
+  }
+
+  function downloadInvoice() {
+    simulateDownload('Invoice.pdf');
+    showNotification('Invoice download started');
+  }
+
+  function downloadReceipt() {
+    simulateDownload('Receipt.pdf');
+    showNotification('Receipt download started');
+  }
+
+  function downloadShippingLabel() {
+    simulateDownload('Shipping_Label.pdf');
+    showNotification('Shipping label download started');
+  }
+
+  function downloadAll() {
+    simulateDownload('Order_Documents.zip');
+    showNotification('All documents download started');
+  }
+
+  function shopSimilarItems() {
+    window.location.href = 'index.html#electronics';
+  }
+
+  function continueShopping() {
+    window.location.href = 'index.html';
+  }
+
+  function openLiveChat() {
+    alert('Live chat feature would open here. In a real implementation, this would connect to a chat service.');
+  }
+
+  function enableWhatsAppUpdates() {
+    const phone = orderData.customerInfo.phone.replace(/\D/g, '');
+    const message = `Hello! I would like to receive WhatsApp updates for my order ${orderData.orderNumber}`;
+    
+    // In a real app, this would send a request to your backend
+    alert(`WhatsApp updates enabled for ${phone}. You will receive updates on your order status.`);
+    
+    // Change button state
+    event.target.textContent = '✅ Enabled';
+    event.target.style.background = '#10b981';
+    event.target.disabled = true;
+  }
+
+  // Simulate download
+  function simulateDownload(filename) {
+    // In a real app, this would be a real download
+    // For demo purposes, we just show a notification
+    console.log(`Simulating download: ${filename}`);
+  }
+
+  // Show notification
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    `;
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => notification.remove(), 300);
+    }, 2000);
+  }
+
+  // Share order function
+  function shareOrder() {
+    if (navigator.share) {
+      navigator.share({
+        title: `My WeShopOnline Order #${orderData.orderNumber}`,
+        text: `I just placed an order on WeShopOnline! Order #${orderData.orderNumber}`,
+        url: window.location.href
+      });
+    } else {
+      alert('Share this page URL: ' + window.location.href);
+    }
+  }
+
+  // Print order function
+  function printOrder() {
+    window.print();
+  }
+
+  // Add to calendar function
+  function addToCalendar() {
+    // In a real app, this would generate and download an .ics file
+    alert('Delivery dates added to your calendar. In a real implementation, this would download a calendar file.');
+  }
+</script>
+
+</body>
+</html>

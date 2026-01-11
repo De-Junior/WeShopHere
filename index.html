@@ -1670,16 +1670,80 @@ function renderProducts(products) {
       ? product.description.substring(0, 80) + '...'
       : 'High-quality product with excellent features. Click for more details.';
 
-    card.innerHTML = `
-      <button class="quick-view-btn" onclick="event.stopPropagation(); openProductModal(${index})">Quick View</button>
-      <img src="${product.image}" alt="${product.name}" loading="lazy" onclick="openProductModal(${index})">
-      <div class="product-name" onclick="openProductModal(${index})">${product.name}</div>
-      <div class="product-description-short" onclick="openProductModal(${index})">${shortDescription}</div>
-      <div class="product-price">R${product.price.toFixed(2)}</div>
-      <button class="add-cart" onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price})">
-        🛒 Add to Cart
-      </button>
-    `;
+   
+// In openProductModal function, find the modal actions section and update it:
+const modalActionsHTML = `
+  <div class="modal-actions">
+    <button class="add-to-cart-modal" onclick="addToCartFromModal(${productIndex})">
+      🛒 Add to Cart
+    </button>
+    <button class="add-to-wishlist-modal" onclick="addToWishlist('${product.name.replace(/'/g, "\\'")}'); showNotification('Added ${product.name.replace(/'/g, "\\'")} to wishlist!')">
+      ❤️ Add to Wishlist
+    </button>
+  </div>
+`;
+
+// Add this function in index.html
+function addToCartFromModal(productIndex) {
+  const filteredProducts = getFilteredProducts();
+  const product = filteredProducts[productIndex];
+  
+  if (!product) {
+    console.error('Product not found at index:', productIndex);
+    return;
+  }
+  
+  // Create cart item object with all necessary data
+  const cartItem = {
+    id: Date.now(), // Unique ID based on timestamp
+    name: product.name,
+    price: product.price,
+    image: product.image,
+    quantity: 1,
+    selected: true,
+    sku: product.sku || `WBH-${product.dept.toUpperCase()}-${String(productIndex + 1).padStart(3, '0')}`,
+    dept: product.dept
+  };
+  
+  // Get existing cart from localStorage or initialize empty array
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  // Check if item already exists in cart by SKU or name
+  const existingItemIndex = cart.findIndex(item => 
+    item.sku === cartItem.sku || item.name === cartItem.name
+  );
+  
+  if (existingItemIndex > -1) {
+    // Update quantity if item exists
+    cart[existingItemIndex].quantity += 1;
+  } else {
+    // Add new item
+    cart.push(cartItem);
+  }
+  
+  // Save updated cart to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  // Update cart count
+  cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  document.getElementById('cartItems').textContent = cartCount;
+  
+  // Update modal button to show success
+  const cartBtn = document.querySelector('.add-to-cart-modal');
+  if (cartBtn) {
+    cartBtn.innerHTML = '🛒 Added to Cart';
+    cartBtn.style.background = '#10b981';
+    
+    // Reset after 2 seconds
+    setTimeout(() => {
+      cartBtn.innerHTML = '🛒 Add to Cart';
+      cartBtn.style.background = '#2563eb';
+    }, 2000);
+  }
+  
+  // Show notification
+  showNotification(`Added ${product.name} to cart!`);
+}
 
     // Make the whole card clickable (except buttons)
     card.addEventListener('click', (e) => {
@@ -1715,10 +1779,35 @@ function renderProducts(products) {
     });
   }
 
-  // Cart functions
-function addToCart(productName, price) {
+function addToCart(productName, price, imageUrl = '') {
   cartCount++;
   document.getElementById('cartItems').textContent = cartCount;
+  
+  // Create cart item object
+  const cartItem = {
+    id: Date.now(), // Unique ID based on timestamp
+    name: productName,
+    price: price,
+    image: imageUrl,
+    quantity: 1,
+    selected: true
+  };
+  
+  // Get existing cart from localStorage or initialize empty array
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  // Check if item already exists in cart
+  const existingItemIndex = cart.findIndex(item => item.name === productName);
+  if (existingItemIndex > -1) {
+    // Update quantity if item exists
+    cart[existingItemIndex].quantity += 1;
+  } else {
+    // Add new item
+    cart.push(cartItem);
+  }
+  
+  // Save updated cart to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
   
   // Update cart button in modal if it exists
   const cartBtn = document.querySelector('.add-to-cart-modal');
@@ -1949,6 +2038,33 @@ function addToWishlist(productName) {
       wishlistBtn.style.borderColor = '#e5e7eb';
     }, 2000);
   }
+}
+
+// Add this function to index.html
+function loadCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  document.getElementById('cartItems').textContent = cartCount;
+}
+
+// Call it when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log(`Total products: ${productsData.length}`);
+  console.log(`Products per page: ${PER_PAGE}`);
+  console.log(`Total pages needed: ${Math.ceil(productsData.length / PER_PAGE)}`);
+  
+  updatePageButtons();
+  showPage(1);
+  setupEventListeners();
+  loadCartCount(); // Load cart count from localStorage
+});
+
+function clearCart() {
+  localStorage.removeItem('cart');
+  cartItems = [];
+  renderCartItems();
+  updateCartSummary();
+  showNotification("Cart cleared");
 }
 
 </script>
