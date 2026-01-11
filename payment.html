@@ -818,6 +818,10 @@
         <span>Shipping</span>
         <span id="shipping">R99.00</span>
       </div>
+      <div class="detail-row">
+        <span>Tax</span>
+        <span id="tax">R0.00</span>
+      </div>
       <div class="detail-row" style="color: #10b981;">
         <span>Discount</span>
         <span id="discount">-R0.00</span>
@@ -871,15 +875,14 @@
 <script>
   // Retrieve data from localStorage
   const checkoutData = JSON.parse(localStorage.getItem('checkoutData'));
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [
-    { name: "Power Bank 20000mAh", price: 699, quantity: 1, image: "https://www.geewiz.co.za/247298-large_default/philips-2-port-20000mah-power-bank.jpg" },
-    { name: "Gaming Mouse", price: 499, quantity: 2, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3YvNGeMRX9_7-ohSXJP_NvsHffPhRocMOg&s" },
-    { name: "Wireless Headphones", price: 899, quantity: 1, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cYWSaBNIhOPF2gguIun1olGtIYrHAlOO7w&s" }
-  ];
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  const couponApplied = localStorage.getItem('couponApplied') === 'true';
+  const couponDiscount = localStorage.getItem('couponDiscount') || 0;
 
   let selectedPaymentMethod = 'card';
   let subtotal = 0;
   let shipping = 99;
+  let tax = 0;
   let discount = 0;
   let total = 0;
   let orderNumber = generateOrderNumber();
@@ -894,12 +897,25 @@
 
     selectedPaymentMethod = checkoutData.paymentMethod || 'card';
     
+    // Check if cart is empty
+    if (cartItems.length === 0) {
+      alert('Your cart is empty. Please add items to your cart first.');
+      window.location.href = 'index.html';
+      return;
+    }
+    
     renderOrderItems();
     renderShippingAddress();
     updateTotals();
     showPaymentMethod();
     setupEventListeners();
     updateReferenceNumber();
+    
+    // Disable cash on delivery for orders above R5000
+    if (selectedPaymentMethod === 'cash' && total > 5000) {
+      alert('Cash on delivery is not available for orders above R5000. Please select a different payment method.');
+      window.location.href = 'checkout.html';
+    }
   });
 
   // Render order items
@@ -912,11 +928,13 @@
       itemElement.className = 'order-item';
       itemElement.innerHTML = `
         <div class="order-item-image">
-          <img src="${item.image}" alt="${item.name}">
+          <img src="${item.image || 'https://via.placeholder.com/50x50?text=No+Image'}" 
+               alt="${item.name}"
+               onerror="this.src='https://via.placeholder.com/50x50?text=Image+Error'">
         </div>
         <div class="order-item-details">
           <div class="order-item-name">${item.name}</div>
-          <div class="order-item-price">R${item.price.toFixed(2)}</div>
+          <div class="order-item-price">R${(item.price * item.quantity).toFixed(2)}</div>
         </div>
         <div style="font-size: 14px; color: #6b7280;">×${item.quantity}</div>
       `;
@@ -934,10 +952,13 @@
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
           <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #374151;">Shipping to:</h4>
           <p style="font-size: 13px; color: #6b7280; line-height: 1.4;">
-            ${checkoutData.shipping.firstName} ${checkoutData.shipping.lastName}<br>
-            ${checkoutData.shipping.address}<br>
-            ${checkoutData.shipping.city}, ${checkoutData.shipping.province}<br>
-            ${checkoutData.shipping.postalCode}
+            ${checkoutData.shipping.firstName || ''} ${checkoutData.shipping.lastName || ''}<br>
+            ${checkoutData.shipping.address || ''}<br>
+            ${checkoutData.shipping.city || ''}, ${checkoutData.shipping.province || ''}<br>
+            ${checkoutData.shipping.postalCode || ''}
+          </p>
+          <p style="font-size: 13px; color: #6b7280; margin-top: 5px;">
+            📞 ${checkoutData.shipping.phone || ''}
           </p>
         </div>
       `;
@@ -946,19 +967,38 @@
 
   // Update totals
   function updateTotals() {
-    // Check for promo code in localStorage
-    const promoApplied = localStorage.getItem('promoApplied') === 'true';
-    discount = promoApplied ? subtotal * 0.1 : 0;
+    // Calculate tax (15% of subtotal)
+    tax = subtotal * 0.15;
+    
+    // Apply coupon discount
+    if (couponApplied) {
+      discount = parseFloat(couponDiscount) || subtotal * 0.1;
+    } else {
+      discount = 0;
+    }
     
     // Add extra fee for cash on delivery
     const cashFee = selectedPaymentMethod === 'cash' ? 50 : 0;
     
-    total = subtotal + shipping - discount + cashFee;
+    // Calculate total
+    total = subtotal + shipping + tax - discount + cashFee;
     
+    // Update display
     document.getElementById('subtotal').textContent = `R${subtotal.toFixed(2)}`;
+    document.getElementById('tax').textContent = `R${tax.toFixed(2)}`;
+    document.getElementById('shipping').textContent = `R${shipping.toFixed(2)}`;
     document.getElementById('discount').textContent = `-R${discount.toFixed(2)}`;
     document.getElementById('total').textContent = `R${total.toFixed(2)}`;
     document.getElementById('amountPaid').textContent = `R${total.toFixed(2)}`;
+    
+    // Update modal with payment method
+    const paymentMethodNames = {
+      'card': 'Credit/Debit Card',
+      'payfast': 'PayFast',
+      'eft': 'Bank Transfer (EFT)',
+      'cash': 'Cash on Delivery'
+    };
+    document.getElementById('paymentMethod').textContent = paymentMethodNames[selectedPaymentMethod];
   }
 
   // Show payment method details
@@ -991,6 +1031,14 @@
     });
     
     document.getElementById(`${selectedPaymentMethod}Details`).classList.add('active');
+    
+    // Enable/disable complete payment button based on payment method
+    const completeBtn = document.getElementById('completePaymentBtn');
+    if (selectedPaymentMethod === 'eft') {
+      completeBtn.disabled = true;
+    } else {
+      completeBtn.disabled = false;
+    }
   }
 
   // Get payment description
@@ -1199,10 +1247,10 @@
   function completePayment() {
     // Validate card details if paying by card
     if (selectedPaymentMethod === 'card') {
-      const cardNumber = document.getElementById('cardNumber').value;
-      const cardName = document.getElementById('cardName').value;
-      const expiryDate = document.getElementById('expiryDate').value;
-      const cvv = document.getElementById('cvv').value;
+      const cardNumber = document.getElementById('cardNumber').value.trim();
+      const cardName = document.getElementById('cardName').value.trim();
+      const expiryDate = document.getElementById('expiryDate').value.trim();
+      const cvv = document.getElementById('cvv').value.trim();
       
       if (!cardNumber || !cardName || !expiryDate || !cvv) {
         alert('Please fill in all card details');
@@ -1211,6 +1259,16 @@
       
       if (cardNumber.replace(/\s/g, '').length < 16) {
         alert('Please enter a valid card number');
+        return;
+      }
+      
+      if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+        alert('Please enter a valid expiry date (MM/YY)');
+        return;
+      }
+      
+      if (cvv.length !== 3 || !/^\d+$/.test(cvv)) {
+        alert('Please enter a valid CVV');
         return;
       }
     }
@@ -1233,18 +1291,45 @@
     btnLoading.style.display = 'inline-block';
     completeBtn.disabled = true;
     
-
+    // Simulate payment processing
+    setTimeout(() => {
+      // Create order data
+      const orderData = {
+        orderNumber: orderNumber,
+        items: cartItems,
+        shipping: checkoutData.shipping,
+        billing: checkoutData.billing || checkoutData.shipping,
+        paymentMethod: selectedPaymentMethod,
+        subtotal: subtotal,
+        shippingFee: shipping,
+        tax: tax,
+        discount: discount,
+        total: total,
+        date: new Date().toISOString(),
+        status: 'processing'
+      };
       
-      localStorage.setItem('orderData', JSON.stringify(orderData));
+      // Save order to localStorage
+      const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+      existingOrders.push(orderData);
+      localStorage.setItem('orders', JSON.stringify(existingOrders));
+      
+      // Save this order separately for easy access
+      localStorage.setItem('lastOrder', JSON.stringify(orderData));
       
       // Clear cart and checkout data
       localStorage.removeItem('cart');
       localStorage.removeItem('checkoutData');
+      localStorage.removeItem('couponApplied');
+      localStorage.removeItem('couponDiscount');
       
       // Reset button state
       btnText.textContent = 'Complete Payment';
       btnLoading.style.display = 'none';
       completeBtn.disabled = false;
+      
+      // Update order number in modal
+      document.getElementById('orderNumber').textContent = orderNumber;
       
       // Show success modal briefly, then redirect
       document.getElementById('successModal').classList.add('active');
@@ -1258,7 +1343,9 @@
 
   // Generate order number
   function generateOrderNumber() {
-    return '#ORD-' + Math.floor(100000 + Math.random() * 900000);
+    const timestamp = Date.now().toString().slice(-6);
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `ORD-${timestamp}${random}`;
   }
 
   // Continue shopping (for modal)
@@ -1271,7 +1358,6 @@
     alert(`Track your order using order number: ${orderNumber}`);
     window.location.href = 'index.html';
   }
-
 </script>
 
 </body>
